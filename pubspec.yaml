@@ -97,8 +97,7 @@ dependencies:
   # ******************************
   #  local packages
   # ******************************
-  dadata:
-    path: packages/dadata
+
  
 
 
