@@ -13,12 +13,10 @@ class SplashCubit extends Cubit<SplashState> {
 
     required LocalStorage storage,
   })  : _go = router,
-        _storage = storage,
      
         super(SplashState.init());
 
   final AppRouter _go;
-  final LocalStorage _storage;
 
 
   Future<void> load() async {
