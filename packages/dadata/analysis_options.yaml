@@ -1,0 +1,28 @@
+
+include: package:lints/recommended.yaml
+
+
+analyzer:
+  exclude:
+    # Generated code
+    - "**/*.g.dart"
+    - "**/*.freezed.dart"
+    - "lib/**.graphql.dart"
+    - "lib/**.gen.dart"
+    - "lib/generated_plugin_registrant.dart"
+    - "lib/pigeon.dart"
+    # Firebase
+    - "lib/src/common/constant/firebase_options.dart"
+    # Localization
+    - "lib/src/common/localization/intl/**"
+    - "lib/src/common/localization/l10n.dart"
+    # Tests
+    - "test/**.mocks.dart"
+    # - "test/*.dart"
+    - ".test_coverage.dart"
+    # Web
+    - "web/**"
+    # Build
+    - "build/**"
+    # Assets
+    - "assets/**"

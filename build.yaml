@@ -1,0 +1,25 @@
+targets:
+  $default:
+    builders:
+      json_serializable:
+        enabled: true
+        generate_for:
+          include:
+            - lib/**_m.dart
+            - lib/**_b.dart
+            - lib/**_c.dart
+
+
+          
+
+        options:
+          explicit_to_json: true
+          include_if_null: false
+      freezed|freezed:
+        enabled: true
+        generate_for:
+          include:
+            - lib/**_m.dart
+            - lib/**_b.dart
+            - lib/**_c.dart
+

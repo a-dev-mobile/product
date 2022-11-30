@@ -1,0 +1,4 @@
+{
+  "conventionalCommits.scopes": ["android", "ios"],
+
+}
