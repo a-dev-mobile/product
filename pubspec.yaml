@@ -76,7 +76,15 @@ dependencies:
 
   # sprintf: ^7.0.0
 
- 
+ # firebase
+  firebase_core: ^2.3.0
+  firebase_crashlytics: ^3.0.6
+  firebase_remote_config: ^3.0.6
+  firebase_messaging: ^14.1.1
+  cloud_firestore: ^4.1.0
+  firebase_in_app_messaging: ^0.7.0+6
+  cloud_functions: ^4.0.5
+  firebase_analytics: ^10.0.6
 
 
   # native calls
