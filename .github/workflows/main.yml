@@ -33,9 +33,11 @@ jobs:
         uses: wzieba/Firebase-Distribution-Github-Action@v1
         with:
             appId: ${{secrets.FIREBASE_ANDROID_APPID}}
-            token: ${{secrets.FIREBASE_TOKEN}}
+            # token: ${{secrets.FIREBASE_TOKEN}}
+            serviceCredentialsFileContent: ${{ secrets.CREDENTIAL_FILE_CONTENT }}            
             groups: testers
             file: build/app/outputs/apk/release/app-release.apk
+            releaseNotes: "привет ${{ github.event.head_commit.author.name }}: ${{ github.event.head_commit.message }}"      
 
 
 
