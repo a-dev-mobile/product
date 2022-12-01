@@ -22,6 +22,7 @@ jobs:
         with:
           channel: 'stable' # or: 'beta', 'dev' or 'master'
           
+          
       - run: flutter doctor -v
       - run: flutter pub get
       - run: flutter analyze
