@@ -83,6 +83,8 @@
       "command": "flutter clean && flutter pub get && flutter pub upgrade && flutter pub outdated && dart fix --apply && dart format . -l 80  && flutter pub get && flutter build apk --release --no-shrink --target lib/main.dart --dart-define IS_DEBUG=true --dart-define IS_PROD=true --dart-define BASE_URL=https://api3.nd.aventus.work/",
       "problemMatcher": []
     },
+
+
     {
       "label": "flutter analyze",
       "command": "flutter analyze",
