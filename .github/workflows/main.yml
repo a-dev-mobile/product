@@ -13,24 +13,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
        
-      - name: Checkout code        
-        uses: actions/checkout@v3
+      - name: Checkout code   
+        uses: actions/checkout@v2
+      # - uses: dart-lang/setup-dart@v1.3
 
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
           channel: 'stable' # or: 'beta', 'dev' or 'master'
           
-      - name: Run flutter doctor
-        run: flutter doctor -v
-
-      - uses: dart-lang/setup-dart@v1.3
-        with:
-          sdk: 2.18.5      
-      - name: Get dependencies
-        run: flutter pub get
-      - name: Analyze
-        run: flutter analyze
+      - run: flutter doctor -v
+      - run: flutter pub get
+      - run: flutter analyze
       - run: flutter build apk
 
 
