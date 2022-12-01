@@ -39,10 +39,13 @@ jobs:
           appId: ${{secrets.FIREBASE_ANDROID_APPID}}
           serviceCredentialsFileContent: ${{ secrets.CREDENTIAL_FILE_CONTENT }}
           groups: testers
-          file: build/app/outputs/flutter-apk/app-release.apk
+          file: /github/workspace/build/app/outputs/flutter-apk/app-release.apk
           releaseNotes: "${{ github.event.head_commit.author.name }}: ${{ github.event.head_commit.message }}"      
 
 
+
+# Error: File build/app/outputs/flutter-apk/app-release.apk does not exist: verify that file points to a binary
+# Error: File /github/workspace/build/app/outputs/apk/release/app-release.apk does not exist: verify that file points to a binary
 # name: Deploy Android to Firebase App Distribution on merge
 # on:
 #   push:
