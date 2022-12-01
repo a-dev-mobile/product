@@ -38,26 +38,12 @@ jobs:
     needs: [build_apk]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 14
-      - name: set up JDK 1.8
-        uses: actions/setup-java@v2
-        with:
-          distribution: "zulu"
-          java-version: "17" #defines the java version
-      - name: Download Artifact
-        uses: actions/download-artifact@master
-        with:
-          name: release-apk
-      - name: Upload APK
-        uses: wzieba/Firebase-Distribution-Github-Action@master
+      - uses: wzieba/Firebase-Distribution-Github-Action@v1
         with:
           appId: ${{secrets.FIREBASE_ANDROID_APPID}}
           serviceCredentialsFileContent: ${{ secrets.CREDENTIAL_FILE_CONTENT }}
           groups: testers
-          file: app-release.apk
+          file: /github/workspace/build/app/outputs/flutter-apk/app-release.apk
 
 
 # name: Deploy Android to Firebase App Distribution on merge
