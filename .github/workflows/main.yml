@@ -38,7 +38,8 @@ jobs:
           appId: ${{secrets.FIREBASE_ANDROID_APPID}}
           serviceCredentialsFileContent: ${{ secrets.CREDENTIAL_FILE_CONTENT }}
           groups: testers
-          file: /github/workspace/build/app/outputs/flutter-apk/app-release.apk
+          file: /github/workspace/build/app/outputs/apk/release/app-release.apk
+          
 
 
 # name: Deploy Android to Firebase App Distribution on merge
