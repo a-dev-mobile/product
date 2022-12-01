@@ -1,7 +1,6 @@
 import 'package:dio/dio.dart';
 // import 'package:product/core/device/device_info.dart';
-import 'package:product/core/storage/storage.dart';
-import 'package:product/navigation/navigation.dart';
+
 
 // class NoInternetInterceptor extends InterceptorsWrapper {
 //   NoInternetInterceptor(this.context);

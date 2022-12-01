@@ -4,7 +4,7 @@ import 'dart:io';
 
 import 'package:bloc_concurrency/bloc_concurrency.dart' as bloc_concurrency;
 import 'package:crypto/crypto.dart';
-import 'package:dadata/dadata.dart';
+
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -70,9 +70,7 @@ Future<void> bootstrap(FutureOr<Widget> Function() app) async {
               create: (context) =>
                   AppRouter(storage: context.read<LocalStorage>()),
             ),
-            RepositoryProvider(
-              create: (context) => DaDataClient(apiKey: API_KEY_DADATA),
-            ),
+          
             RepositoryProvider(
               create: (context) => NetworkClient(
                 baseUrl: BASE_URL,

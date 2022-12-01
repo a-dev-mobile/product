@@ -33,6 +33,7 @@ class _OnBoardingView extends StatefulWidget {
 
 class _OnBoardingViewState extends State<_OnBoardingView> {
   final introKey = GlobalKey<IntroductionScreenState>();
+  // ignore: unused_field
   int _indexPage = 0;
 
   Future<bool> _willPopScopeCall(BuildContext context) async {

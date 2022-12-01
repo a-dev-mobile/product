@@ -17,7 +17,7 @@ import 'package:product/core/storage/local_storage.dart';
 import 'package:product/feature/onboarding/onboarding.dart';
 
 import 'package:product/feature/splash/splash.dart';
-import 'package:product/l10n/l10n.dart';
+
 import 'package:product/navigation/navigation.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:share_plus/share_plus.dart';
@@ -35,7 +35,7 @@ class DebugMenuPage extends StatelessWidget {
     final storage = context.read<LocalStorage>();
     final go = context.read<AppRouter>();
     final cubitDebug = context.read<DebugCubit>();
-    final l = context.l10n;
+
 
     return Scaffold(
       appBar: AppBar(
