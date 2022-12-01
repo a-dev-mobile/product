@@ -1,25 +1,31 @@
+name: "Build android"
 on:
   push:
     branches: 
       - develop
-name: "Build and Release"
+      - 'release/**'
+  pull_request:
+    branches: 
+      - develop
+      - master
 jobs:
-  build:
-    name: "Build and Release"
+  build_android:
     runs-on: ubuntu-latest
     steps:
+    
       - uses: actions/checkout@v3
-      - uses: actions/setup-java@v3
-        with:
-          distribution: 'temurin'
-          java-version: '17'
-          check-latest: true
-      - uses: actions/checkout@v3
-      - uses: subosito/flutter-action@v2
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
         with:
           channel: 'stable' # or: 'beta', 'dev' or 'master'
-      - run: flutter pub get
-      - run: flutter analyze
+      
+      - uses: dart-lang/setup-dart@v1.3
+        with:
+          sdk: 2.18.5      
+      - name: Get dependencies
+        run: flutter pub get
+      - name: Analyze
+        run: flutter analyze
       - run: flutter build apk
 
 
