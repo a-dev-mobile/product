@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:flutter/services.dart';
 import 'package:path/path.dart';
+import 'package:product/bootstrap.dart';
 import 'package:sqflite_sqlcipher/sqflite.dart';
 
 const _nameDB = 'food_encrypted.db';
@@ -37,12 +38,13 @@ class AppDatabase {
   }
 
   Future<List<String>> getNameRuNutrient() async {
-    final db = await openDatabase(_path, password: '123');
+    final db = await openDatabase(_path, password: APP_DB_PASSWORD);
 
     final sentences = <String>[];
 
     await db.rawQuery('''SELECT nutrient_ru from nutrient''').then((value) {
       for (final element in value) {
+        
         sentences.add(
           element['nutrient_ru'].toString(),
         );

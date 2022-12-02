@@ -125,4 +125,7 @@ app.*.map.json
 !.idea/codeStyles/
 !.idea/dictionaries/
 !.idea/runConfigurations/
+
 .vscode/launch.json
+.vscode/tasks.json
+~

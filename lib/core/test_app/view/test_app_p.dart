@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:product/app/style/style.dart';
+import 'package:product/bootstrap.dart';
+import 'package:product/core/test_app/cubit/test_app_cubit.dart';
 
 import 'package:product/core/widget/widget.dart';
 import 'package:product/dataBase/app_database.dart';
@@ -15,7 +17,10 @@ class TestAppPage extends StatelessWidget {
   static const name = 'test_app';
   @override
   Widget build(BuildContext context) {
-    return const _TestFlashLibPage();
+    return BlocProvider(
+      create: (context) => TestAppCubit(db: context.read<AppDatabase>()),
+      child: const _TestFlashLibPage(),
+    );
   }
 }
 
@@ -25,47 +30,38 @@ class _TestFlashLibPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: ClearFocus(
-        child: Center(
+      body: SafeArea(
+        child: ClearFocus(
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
             children: [
-              const TextField(),
-              ElevatedButton(
-                onPressed: () {
-                  _showTopFlash(context: context);
-                },
-                child: const Text('1'),
-              ),
-              ElevatedButton(
-                onPressed: () {
-                  _showTopFlash2(context: context);
-                },
-                child: const Text('2'),
-              ),
-              ElevatedButton(
-                onPressed: () {
-                  MySnackBar.show(
-                    context: context,
-                    alertType: AlertType.warning,
-                    textBtn: 'click',
-                    msg: 'asdasdasd fas as fas fs faf ',
-                    onPressed: () {
-                      print('click');
-                    },
-                    title:
-                        'ошиas das das das das dasиas das das das das dasиas das das das das dasиas das das das das dasиas das das das das dasиas das das das das dasиas das das das das das dasd asd asd as daбка',
-                  );
-                },
-                child: const Text('3'),
-              ),
               ElevatedButton(
                 onPressed: () async {
-              
-                  await context.read<AppDatabase>().getNameRuNutrient();
+                  await context.read<TestAppCubit>().loadNameNutrient();
                 },
                 child: const Text('open db'),
-              )
+              ),
+              const Text(API_KEY_DADATA),
+              const Text(BASE_URL),
+              BlocBuilder<TestAppCubit, TestAppState>(
+                builder: (context, state) {
+                  if (state.isLoad) return const LinearProgressIndicator();
+
+                  return Expanded(
+                    child: ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: state.nameNutrient.length,
+                      itemBuilder: (context, index) {
+                        final name = state.nameNutrient[index];
+
+                        return ListTile(
+                          title: Text(name),
+                        );
+                      },
+                    ),
+                  );
+                },
+              ),
             ],
           ),
         ),

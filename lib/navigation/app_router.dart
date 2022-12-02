@@ -109,7 +109,7 @@ class AppRouter {
       // if you can't find anything
 
     } else {
-      router.goNamed(SplashPage.name);
+      router.goNamed(TestAppPage.name);
     }
   }
 
