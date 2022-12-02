@@ -5,7 +5,6 @@ import 'dart:io';
 import 'package:bloc_concurrency/bloc_concurrency.dart' as bloc_concurrency;
 import 'package:crypto/crypto.dart';
 
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -21,6 +20,8 @@ import 'package:product/core/storage/storage.dart';
 
 import 'package:product/navigation/navigation.dart';
 import 'package:path_provider/path_provider.dart';
+
+import 'dataBase/app_database.dart';
 
 // dart define
 const IS_DEBUG = bool.fromEnvironment('IS_DEBUG');
@@ -70,7 +71,9 @@ Future<void> bootstrap(FutureOr<Widget> Function() app) async {
               create: (context) =>
                   AppRouter(storage: context.read<LocalStorage>()),
             ),
-          
+            RepositoryProvider(
+              create: (context) => AppDatabase()..initDb(),
+            ),
             RepositoryProvider(
               create: (context) => NetworkClient(
                 baseUrl: BASE_URL,

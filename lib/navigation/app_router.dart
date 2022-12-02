@@ -1,10 +1,10 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 
-
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:product/core/storage/local_storage.dart';
+import 'package:product/core/test_app/test_app.dart';
 import 'package:product/core/widget/widget.dart';
 import 'package:product/feature/debug_menu/debug_menu.dart';
 import 'package:product/feature/onboarding/vew/vew.dart';
@@ -14,7 +14,6 @@ import 'package:product/feature/splash/splash.dart';
 abstract class AppRoute {}
 
 final _pageNavigatorKey = GlobalKey<NavigatorState>();
-
 
 class AppRouter {
   AppRouter({
@@ -57,6 +56,14 @@ class AppRouter {
             pageBuilder: (context, state) => NoTransitionPage(
               key: state.pageKey,
               child: const OnBoardingPage(),
+            ),
+          ),
+          GoRoute(
+            name: TestAppPage.name,
+            path: TestAppPage.path,
+            pageBuilder: (context, state) => NoTransitionPage(
+              key: state.pageKey,
+              child: const TestAppPage(),
             ),
           ),
           GoRoute(

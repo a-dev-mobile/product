@@ -1,14 +1,16 @@
-
 import 'package:flash/flash.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:product/app/style/style.dart';
 
 import 'package:product/core/widget/widget.dart';
+import 'package:product/dataBase/app_database.dart';
 
-class TestFlashLibPage extends StatelessWidget {
-  const TestFlashLibPage({super.key});
-
+class TestAppPage extends StatelessWidget {
+  const TestAppPage({super.key});
+  static const path = '/test-app';
+  static const name = 'test_app';
   @override
   Widget build(BuildContext context) {
     return const _TestFlashLibPage();
@@ -55,6 +57,13 @@ class _TestFlashLibPage extends StatelessWidget {
                 },
                 child: const Text('3'),
               ),
+              ElevatedButton(
+                onPressed: () async {
+                  await context.read<AppDatabase>().initDb();
+                  await context.read<AppDatabase>().getNameRuNutrient();
+                },
+                child: const Text('open db'),
+              )
             ],
           ),
         ),
