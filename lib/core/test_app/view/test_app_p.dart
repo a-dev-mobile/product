@@ -69,6 +69,7 @@ class _TestFlashLibPage extends StatelessWidget {
     );
   }
 
+  // ignore: unused_element
   void _showTopFlash({
     FlashBehavior style = FlashBehavior.floating,
     required BuildContext context,
@@ -121,6 +122,7 @@ class _TestFlashLibPage extends StatelessWidget {
     );
   }
 
+  // ignore: unused_element
   void _showTopFlash2({required BuildContext context}) {
     showFlash<void>(
       context: context,
