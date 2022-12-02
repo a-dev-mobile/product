@@ -1,10 +1,10 @@
 import 'dart:io';
-import 'dart:typed_data';
+
 
 import 'package:flutter/services.dart';
 import 'package:path/path.dart';
 import 'package:sqflite_sqlcipher/sqflite.dart';
-import 'package:sqflite_sqlcipher/sqlite_api.dart';
+
 
 const _nameDB = "food_encrypted.db";
 
