@@ -1,34 +1,5 @@
 import 'package:dio/dio.dart';
-// import 'package:product/core/device/device_info.dart';
 
-
-// class NoInternetInterceptor extends InterceptorsWrapper {
-//   NoInternetInterceptor(this.context);
-//   BuildContext context;
-//   @override
-//   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
-//     final state = context.read<InternetCubit>().state;
-
-//     if (state != null && state) {
-//       logger.e('NO_INTERNET');
-//       return handler
-//           .reject(DioError(requestOptions: options, type: DioErrorType.other));
-//     }
-//     return handler.next(options);
-//   }
-// }
-
-// class PageDirectionInterceptor extends InterceptorsWrapper {
-// @override
-// void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
-// if (!cubit.state!) {
-//   logger.e('NO_INTERNET');
-//   return handler
-//       .reject(DioError(requestOptions: options, type: DioErrorType.other));
-// }
-// return handler.next(options);
-// }
-// }
 
 class ContentTypeInterceptor extends InterceptorsWrapper {
   @override

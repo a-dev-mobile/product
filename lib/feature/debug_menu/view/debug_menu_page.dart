@@ -1,4 +1,4 @@
-// ignore_for_file: unused_element
+// ignore_for_file: unused_element, lines_longer_than_80_chars
 
 import 'dart:io';
 
@@ -8,18 +8,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:product/app/common_cubits/common_cubits.dart';
 import 'package:product/app/style/style.dart';
-
-
 import 'package:product/core/storage/local_storage.dart';
-
 import 'package:product/feature/onboarding/onboarding.dart';
-
 import 'package:product/feature/splash/splash.dart';
-
 import 'package:product/navigation/navigation.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:share_plus/share_plus.dart';
 
 class DebugMenuPage extends StatelessWidget {

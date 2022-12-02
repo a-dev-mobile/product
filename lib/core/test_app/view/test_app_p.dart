@@ -1,3 +1,5 @@
+// ignore_for_file: lines_longer_than_80_chars, avoid_print
+
 import 'package:flash/flash.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -59,7 +61,7 @@ class _TestFlashLibPage extends StatelessWidget {
               ),
               ElevatedButton(
                 onPressed: () async {
-                  await context.read<AppDatabase>().initDb();
+              
                   await context.read<AppDatabase>().getNameRuNutrient();
                 },
                 child: const Text('open db'),
@@ -80,7 +82,7 @@ class _TestFlashLibPage extends StatelessWidget {
       // duration: const Duration(seconds: 2),
       persistent: false,
       builder: (_, controller) {
-        return Flash(
+        return Flash<void>(
           controller: controller,
           enableVerticalDrag: false,
           behavior: style,

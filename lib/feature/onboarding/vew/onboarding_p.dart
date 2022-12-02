@@ -1,3 +1,5 @@
+// ignore_for_file: lines_longer_than_80_chars
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -91,9 +93,10 @@ class _OnBoardingViewState extends State<_OnBoardingView> {
           next: const Icon(Icons.arrow_forward),
           done: const Text('Далее'),
           onDone: () {
-            context.read<OnboardingCubit>().complectOnboarding;
+            context.read<OnboardingCubit>().complectOnboarding();
+
              GoRouter.of(context).goNamed(TestAppPage.name);
-          }),
+          },),
     );
   }
 }

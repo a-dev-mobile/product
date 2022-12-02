@@ -1,27 +1,26 @@
+// ignore_for_file: constant_identifier_names
+
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
 import 'package:bloc_concurrency/bloc_concurrency.dart' as bloc_concurrency;
 import 'package:crypto/crypto.dart';
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
-
+import 'package:path_provider/path_provider.dart';
 import 'package:product/app_bloc_observer.dart';
 import 'package:product/core/device/device_info.dart';
 import 'package:product/core/log/log.dart';
 import 'package:product/core/network/network.dart';
 import 'package:product/core/storage/storage.dart';
+import 'package:product/dataBase/app_database.dart';
 
 import 'package:product/navigation/navigation.dart';
-import 'package:path_provider/path_provider.dart';
-
-import 'dataBase/app_database.dart';
 
 // dart define
 const IS_DEBUG = bool.fromEnvironment('IS_DEBUG');
@@ -72,13 +71,13 @@ Future<void> bootstrap(FutureOr<Widget> Function() app) async {
                   AppRouter(storage: context.read<LocalStorage>()),
             ),
             RepositoryProvider(
+              lazy: false,
               create: (context) => AppDatabase()..initDb(),
             ),
             RepositoryProvider(
               create: (context) => NetworkClient(
                 baseUrl: BASE_URL,
-                storage: context.read<LocalStorage>(),
-                router: context.read<AppRouter>(), userAgent: userAgent,
+                userAgent: userAgent,
                 // показывать ли http трафик в логе
               )..isShowHttpInLog = false,
             ),

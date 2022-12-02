@@ -1,7 +1,9 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first, avoid_positional_boolean_parameters
+// ignore_for_file: avoid_positional_boolean_parameters, lines_longer_than_80_chars
+
 import 'dart:convert';
 
 import 'package:bloc/bloc.dart';
+import 'package:flutter/cupertino.dart';
 
 class DebugCubit extends Cubit<DebugState> {
   DebugCubit()
@@ -16,14 +18,24 @@ class DebugCubit extends Cubit<DebugState> {
   }
 }
 
+@immutable
 class DebugState {
-  final bool isShowDevice;
-  final bool isShowBtnHttpLog;
-
   const DebugState({
     required this.isShowDevice,
     required this.isShowBtnHttpLog,
   });
+
+  factory DebugState.fromJson(String source) =>
+      DebugState.fromMap(json.decode(source) as Map<String, dynamic>);
+
+  factory DebugState.fromMap(Map<String, dynamic> map) {
+    return DebugState(
+      isShowDevice: map['isShowDevice'] as bool,
+      isShowBtnHttpLog: map['isShowBtnHttpLog'] as bool,
+    );
+  }
+  final bool isShowDevice;
+  final bool isShowBtnHttpLog;
 
   DebugState copyWith({
     bool? isShowDevice,
@@ -42,13 +54,6 @@ class DebugState {
     };
   }
 
-  factory DebugState.fromMap(Map<String, dynamic> map) {
-    return DebugState(
-      isShowDevice: map['isShowDevice'] as bool,
-      isShowBtnHttpLog: map['isShowBtnHttpLog'] as bool,
-    );
-  }
-
   String toJson() => json.encode(toMap());
 
   @override
@@ -65,7 +70,4 @@ class DebugState {
 
   @override
   int get hashCode => isShowDevice.hashCode ^ isShowBtnHttpLog.hashCode;
-
-  factory DebugState.fromJson(String source) =>
-      DebugState.fromMap(json.decode(source) as Map<String, dynamic>);
 }

@@ -4,25 +4,18 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:product/core/storage/local_storage.dart';
 import 'package:product/navigation/app_router.dart';
 
 class SplashCubit extends Cubit<SplashState> {
   SplashCubit({
     required AppRouter router,
-
-    required LocalStorage storage,
   })  : _go = router,
-     
         super(SplashState.init());
 
   final AppRouter _go;
 
-
   Future<void> load() async {
     emit(state.copyWith(isLoad: true));
-
-  
 
     await _go.selectedRouter();
 
