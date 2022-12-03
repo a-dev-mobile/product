@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class AppLogo extends StatelessWidget {
   const AppLogo({
@@ -10,8 +11,8 @@ class AppLogo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // for nado_deneg
-    return Image.asset(
-      'assets/image/logo.png',
+    return SvgPicture.asset(
+      'assets/svg/logo.svg',
       width: size,
       height: size,
     );

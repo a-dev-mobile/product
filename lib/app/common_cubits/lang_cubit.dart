@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 
+
 const _ru = 'ru';
 const _en = 'en';
 
@@ -9,6 +10,7 @@ const _en = 'en';
 class LangCubit extends HydratedCubit<String> {
   /// default
   LangCubit() : super(_defaultLocale);
+
   static String get _defaultLocale {
     switch (window.locale.languageCode) {
       case _ru:
@@ -17,6 +19,10 @@ class LangCubit extends HydratedCubit<String> {
         return _en;
     }
   }
+
+
+
+
 
   ///
   void setLocaleEN() {

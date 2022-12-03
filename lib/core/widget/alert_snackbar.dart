@@ -76,35 +76,35 @@ class MyAlert extends StatelessWidget {
   _AlertChangingElements _getDiffer(AlertType alertType) {
     switch (alertType) {
       case AlertType.info:
-        return _AlertChangingElements(
-          colorBg: const Color(0xffF1F7FC),
-          colorBtn: const Color(0xffE3ECF2),
-          colorText: const Color(0xff34668E),
+        return const _AlertChangingElements(
+          colorBg: Color(0xffF1F7FC),
+          colorBtn: Color(0xffE3ECF2),
+          colorText: Color(0xff34668E),
           pathIcon: 'assets/svg/ic_info.svg',
           pathIconClose: 'assets/svg/ic_info_close.svg',
         );
 
       case AlertType.warning:
-        return _AlertChangingElements(
-          colorBg: const Color(0xffFDFAE3),
-          colorBtn: const Color(0xffFAEFC7),
-          colorText: const Color(0xff4E451A),
+        return const _AlertChangingElements(
+          colorBg: Color(0xffFDFAE3),
+          colorBtn: Color(0xffFAEFC7),
+          colorText: Color(0xff4E451A),
           pathIcon: 'assets/svg/ic_warning.svg',
           pathIconClose: 'assets/svg/ic_warning_close.svg',
         );
       case AlertType.success:
-        return _AlertChangingElements(
-          colorBg: const Color(0xffF7FDF7),
-          colorBtn: const Color(0xffE6F2E8),
-          colorText: const Color(0xff00752B),
+        return const _AlertChangingElements(
+          colorBg: Color(0xffF7FDF7),
+          colorBtn: Color(0xffE6F2E8),
+          colorText: Color(0xff00752B),
           pathIcon: 'assets/svg/ic_success.svg',
           pathIconClose: 'assets/svg/ic_success_close.svg',
         );
       case AlertType.error:
-        return _AlertChangingElements(
-          colorBg: const Color(0xffFFF6F6),
-          colorBtn: const Color(0xffFFF6F6),
-          colorText: const Color(0xff923131),
+        return const _AlertChangingElements(
+          colorBg: Color(0xffFFF6F6),
+          colorBtn: Color(0xffFFF6F6),
+          colorText: Color(0xff923131),
           pathIcon: 'assets/svg/ic_error.svg',
           pathIconClose: 'assets/svg/ic_error_close.svg',
         );
@@ -206,18 +206,18 @@ class MyAlert extends StatelessWidget {
     );
   }
 }
-
+@immutable
 class _AlertChangingElements {
-  final String pathIconClose;
-  final String pathIcon;
-  final Color colorBg;
-  final Color colorBtn;
-  final Color colorText;
-  _AlertChangingElements({
+  const _AlertChangingElements({
     required this.pathIconClose,
     required this.pathIcon,
     required this.colorBg,
     required this.colorBtn,
     required this.colorText,
   });
+  final String pathIconClose;
+  final String pathIcon;
+  final Color colorBg;
+  final Color colorBtn;
+  final Color colorText;
 }

@@ -41,7 +41,7 @@ class PdfPage extends StatelessWidget {
               right: 10,
               child: ElevatedButton(
                 onPressed: Navigator.of(context).pop,
-                child: Text('Закрыть'),
+                child: const Text('Закрыть'),
               ),
             ),
           ],

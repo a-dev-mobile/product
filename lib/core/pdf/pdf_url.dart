@@ -1,3 +1,5 @@
+// ignore_for_file: constant_identifier_names
+
 abstract class PdfUrls {
   static const _base1 = 'https://nadodeneg.ru/wp-content/uploads';
   static const _base2 = 'https://nadodeneg.ru/docs';

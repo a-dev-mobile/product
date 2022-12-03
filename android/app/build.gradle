@@ -21,41 +21,14 @@ if (flutterVersionName == null) {
     flutterVersionName = '1.0'
 }
 
-def keystoreProperties = new Properties()
-def keystorePropertiesFile = rootProject.file('key.properties')
-if (keystorePropertiesFile.exists()) {
-    keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
-}
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 
 android {
+            namespace 'a.dev.mobile.product'
     compileSdkVersion 33
-    def versionPropsFile = file('version.properties')
-    if (versionPropsFile.canRead()) {
-        def Properties versionProps = new Properties()
-
-        versionProps.load(new FileInputStream(versionPropsFile))
-
-        def code = versionProps['VERSION_CODE'].toInteger() + 1
-
-        versionProps['VERSION_CODE'] = code.toString()
-        versionProps.store(versionPropsFile.newWriter(), null)
-
-
-        defaultConfig {
-
-            applicationId "a.dev.mobile.product"
-            minSdkVersion 21
-            targetSdkVersion flutter.targetSdkVersion
-            versionCode code
-            versionName flutterVersionName
-
-        }
-    } else {
-        throw new GradleException("Could not read version.properties!")
-    }
+    ndkVersion flutter.ndkVersion
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -70,43 +43,26 @@ android {
         main.java.srcDirs += 'src/main/kotlin'
     }
 
-
-    applicationVariants.all { variant ->
-        variant.outputs.all {
-            def variantName = variant.name
-            def versionName = variant.versionName
-            def versionCode = variant.versionCode
-
-            outputFileName = "P_v${versionName}(${versionCode})_${variantName}.apk"
-        }
+    defaultConfig {
+        
+        // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
+        applicationId "a.dev.mobile.product"
+        // You can update the following values to match your application needs.
+        // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-build-configuration.
+     minSdkVersion 22     
+        targetSdkVersion flutter.targetSdkVersion
+        versionCode flutterVersionCode.toInteger()
+        versionName flutterVersionName
     }
-
-
-    signingConfigs {
-
-        release {
-            // keyAlias keystoreProperties['keyAlias']
-            // keyPassword keystoreProperties['keyPassword']
-            // storeFile keystoreProperties['storeFile'] ? file(keystoreProperties['storeFile']) : null
-            // storePassword keystoreProperties['storePassword']
-
-        }
-    }
-
 
     buildTypes {
         release {
-            signingConfig signingConfigs.debug
-            // signingConfig signingConfigs.release
-            // minifyEnabled false
-            // shrinkResources false
-
-        }
-        debug {
+            // TODO: Add your own signing config for the release build.
+            // Signing with the debug keys for now, so `flutter run --release` works.
             signingConfig signingConfigs.debug
         }
     }
-    namespace 'a.dev.mobile.product'
+
 }
 
 flutter {

@@ -2,14 +2,12 @@ import 'package:dio/dio.dart';
 import 'package:dio_log/interceptor/dio_log_interceptor.dart';
 import 'package:product/core/log/log.dart';
 import 'package:product/core/network/network.dart';
-import 'package:product/core/storage/storage.dart';
-import 'package:product/navigation/navigation.dart';
+
 
 class NetworkClient {
   NetworkClient({
     required String baseUrl,
-    required LocalStorage storage,
-    required AppRouter router,
+
     required String userAgent,
   }) : _dio = Dio(
           BaseOptions(
