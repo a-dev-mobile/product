@@ -1,12 +1,13 @@
 import 'dart:developer';
 import 'dart:io';
+import 'dart:ui';
 
 import 'package:flutter/services.dart';
 import 'package:path/path.dart';
 import 'package:product/bootstrap.dart';
 import 'package:sqflite_sqlcipher/sqflite.dart';
 
-const _nameDB = 'food_encrypted.db';
+const _nameDB = 'product_encrypted.db';
 
 class AppDatabase {
   late String _path;
@@ -37,16 +38,20 @@ class AppDatabase {
     }
   }
 
-  Future<List<String>> getNameRuNutrient() async {
-    final db = await openDatabase(_path, password: APP_DB_PASSWORD);
+  Future<Database> _openDB() async {
+    return openDatabase(_path, password: APP_DB_PASSWORD);
+  }
+
+  Future<List<String>> getNameNutrient({required String locale}) async {
+    final db = await _openDB();
 
     final sentences = <String>[];
 
-    await db.rawQuery('''SELECT nutrient_ru from nutrient''').then((value) {
+    await db
+        .rawQuery('''SELECT nutrient_$locale from nutrient''').then((value) {
       for (final element in value) {
-        
         sentences.add(
-          element['nutrient_ru'].toString(),
+          element['nutrient_$locale'].toString(),
         );
       }
     });

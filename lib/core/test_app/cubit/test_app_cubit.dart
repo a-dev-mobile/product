@@ -3,20 +3,23 @@ import 'dart:convert';
 
 import 'package:bloc/bloc.dart';
 import 'package:flutter/foundation.dart';
+import 'package:product/app/common_cubits/common_cubits.dart';
 
 import 'package:product/dataBase/app_database.dart';
 
 class TestAppCubit extends Cubit<TestAppState> {
-  TestAppCubit({required AppDatabase db})
+  TestAppCubit({required AppDatabase db, required LangCubit locale})
       : _db = db,
+        _locale = locale,
         super(const TestAppState(isLoad: true, nameNutrient: []));
   final AppDatabase _db;
+  final LangCubit _locale;
 
   Future<void> loadNameNutrient() async {
     emit(state.copyWith(isLoad: true));
 
     try {
-      final name = await _db.getNameRuNutrient();
+      final name = await _db.getNameNutrient(locale: _locale.state);
       emit(state.copyWith(nameNutrient: name));
     } finally {
       emit(state.copyWith(isLoad: false));

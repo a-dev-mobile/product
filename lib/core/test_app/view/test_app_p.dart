@@ -4,12 +4,15 @@ import 'package:flash/flash.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+
+import 'package:product/app/common_cubits/common_cubits.dart';
 import 'package:product/app/style/style.dart';
 import 'package:product/bootstrap.dart';
 import 'package:product/core/test_app/cubit/test_app_cubit.dart';
 
 import 'package:product/core/widget/widget.dart';
 import 'package:product/dataBase/app_database.dart';
+import 'package:product/l10n/l10n.dart';
 
 class TestAppPage extends StatelessWidget {
   const TestAppPage({super.key});
@@ -18,7 +21,9 @@ class TestAppPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => TestAppCubit(db: context.read<AppDatabase>()),
+      create: (context) => TestAppCubit(
+          db: context.read<AppDatabase>(),
+          locale: context.read<LangCubit>()),
       child: const _TestFlashLibPage(),
     );
   }
@@ -29,17 +34,34 @@ class _TestFlashLibPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l = context.l10n;
     return Scaffold(
       body: SafeArea(
         child: ClearFocus(
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              ElevatedButton(
-                onPressed: () async {
-                  await context.read<TestAppCubit>().loadNameNutrient();
-                },
-                child: const Text('open db'),
+              Row(
+                children: [
+                  ElevatedButton(
+                    onPressed: () {
+                      context.read<TestAppCubit>().loadNameNutrient();
+                    },
+                    child: Text('open ${l.amount}'),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      context.read<LangCubit>().changeLocale();
+                    },
+                    child: const Text('change locale'),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      context.read<ThemeCubit>().changeTheme();
+                    },
+                    child: const Text('change theme'),
+                  ),
+                ],
               ),
               const Text(API_KEY_DADATA),
               const Text(BASE_URL),

@@ -21,11 +21,10 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        // BlocProvider(create: (context) => ThemeCubit()),
-        // BlocProvider(create: (context) => LangCubit()),
+        BlocProvider(create: (context) => ThemeCubit()),
+        BlocProvider(create: (context) => LangCubit()),
         BlocProvider(create: (context) => InternetCubit()),
         BlocProvider(create: (context) => DebugCubit()),
-       
       ],
       child: const _MobileApp(),
     );
@@ -53,8 +52,9 @@ class _MobileApp extends StatelessWidget {
                   MaterialApp.router(
                 onGenerateTitle: (context) =>
                     AppLocalizations.of(context).app_name,
-                themeMode: ThemeMode.light,
+                themeMode: context.watch<ThemeCubit>().state,
                 theme: AppThemeFlex.lightThemeData(context),
+                darkTheme: AppThemeFlex.darkThemeData(context),
                 title: 'Nado Deneg',
                 debugShowCheckedModeBanner: false,
                 localizationsDelegates: const [
@@ -64,7 +64,7 @@ class _MobileApp extends StatelessWidget {
                   GlobalCupertinoLocalizations.delegate,
                 ],
                 supportedLocales: AppLocalizations.supportedLocales,
-                locale: const Locale('ru'),
+                locale: Locale(context.watch<LangCubit>().state),
                 routerDelegate: go.router.routerDelegate,
                 routeInformationParser: go.router.routeInformationParser,
                 routeInformationProvider: go.router.routeInformationProvider,

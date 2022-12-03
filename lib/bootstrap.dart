@@ -73,7 +73,7 @@ Future<void> bootstrap(FutureOr<Widget> Function() app) async {
                   AppRouter(storage: context.read<LocalStorage>()),
             ),
             RepositoryProvider(
-              lazy: false,
+    
               create: (context) => AppDatabase()..initDb(),
             ),
             RepositoryProvider(

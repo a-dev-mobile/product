@@ -25,6 +25,8 @@ jobs:
 
       - run: flutter doctor -v
       - run: flutter pub get
+      
+      - run: dart fix --apply
       - run: flutter analyze
       - run: flutter build apk --release --dart-define IS_DEBUG=true --dart-define IS_PROD=true --dart-define BASE_URL=https://api3.nd.aventus.work/ --dart-define APP_DB_PASSWORD=123 --dart-define API_KEY_DADATA=8dfe375e50181b3f1e7d0dfd1070f1559d73d2c5
 
