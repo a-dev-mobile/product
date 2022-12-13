@@ -1,10 +1,8 @@
-// ignore_for_file: non_constant_identifier_names, constant_identifier_names
+// ignore_for_file: constant_identifier_names
 
-import 'package:intl/intl.dart';
-
-final DateFormat dateFormatter = DateFormat('dd.MM.yy');
-final DateFormat DATE_FORMAT_yyyyMMdd = DateFormat('yyyy-MM-dd');
-final DateFormat DATE_FORMAT_yyyyMMddHHmmss = DateFormat('yyyy-MM-dd HH:mm:ss');
-final DateFormat DATE_FORMAT_ddmmyyyy = DateFormat('dd.MM.yyyy');
-
-const String SPECIAL_USER_LOGIN = '9531765465';
+// dart define
+const IS_DEBUG = bool.fromEnvironment('IS_DEBUG');
+const IS_PROD = bool.fromEnvironment('IS_PROD');
+const APP_DB_PASSWORD = String.fromEnvironment('APP_DB_PASSWORD');
+// const BASE_URL = String.fromEnvironment('BASE_URL');
+// const API_KEY_DADATA = String.fromEnvironment('API_KEY_DADATA');

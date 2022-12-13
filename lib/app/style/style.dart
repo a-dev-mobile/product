@@ -1,4 +1,2 @@
-export 'color/color.dart';
-export 'spacing/spacing.dart';
+export 'extensions/extensions.dart';
 export 'theme/theme.dart';
-export 'typography/typography.dart';

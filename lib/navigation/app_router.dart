@@ -2,18 +2,17 @@
 
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-
 import 'package:product/core/storage/local_storage.dart';
-import 'package:product/core/test_app/test_app.dart';
 import 'package:product/core/widget/widget.dart';
+import 'package:product/feature/bottom_nav_bar/bottom_nav_bar.dart';
+import 'package:product/feature/category/view/category_p.dart';
+import 'package:product/feature/common/test_app/test_app.dart';
 import 'package:product/feature/debug_menu/debug_menu.dart';
 import 'package:product/feature/onboarding/vew/vew.dart';
 import 'package:product/feature/overlay_widget/overlay_widget.dart';
+import 'package:product/feature/search/search.dart';
+import 'package:product/feature/setting/setting_tab.dart';
 import 'package:product/feature/splash/splash.dart';
-
-abstract class AppRoute {}
-
-final _pageNavigatorKey = GlobalKey<NavigatorState>();
 
 class AppRouter {
   AppRouter({
@@ -21,8 +20,12 @@ class AppRouter {
   }) : _storage = storage;
   final LocalStorage _storage;
 
+  static final _pageNavigatorKey = GlobalKey<NavigatorState>();
+
+
   final GoRouter router = GoRouter(
     debugLogDiagnostics: true,
+    // initialLocation: SearchPage.path,
     initialLocation: SplashPage.path,
     routes: [
       ShellRoute(
@@ -35,9 +38,33 @@ class AppRouter {
         },
         routes: [
           GoRoute(
+            name: BottomNavBarPage.name,
+            path: BottomNavBarPage.path,
+            pageBuilder: (context, state) => MaterialPage<void>(
+              key: state.pageKey,
+              child: const BottomNavBarPage(),
+            ),
+          ),
+          GoRoute(
+            name: SearchPage.name,
+            path: SearchPage.path,
+            pageBuilder: (context, state) => MaterialPage<void>(
+              key: state.pageKey,
+              child: const SearchPage(),
+            ),
+          ),
+          GoRoute(
+            name: SettingPage.name,
+            path: SettingPage.path,
+            pageBuilder: (context, state) => MaterialPage<void>(
+              key: state.pageKey,
+              child: const SettingPage(),
+            ),
+          ),
+          GoRoute(
             name: DebugMenuPage.name,
             path: DebugMenuPage.path,
-            pageBuilder: (context, state) => NoTransitionPage(
+            pageBuilder: (context, state) => MaterialPage<void>(
               key: state.pageKey,
               child: const DebugMenuPage(),
             ),
@@ -45,7 +72,7 @@ class AppRouter {
           GoRoute(
             name: SplashPage.name,
             path: SplashPage.path,
-            pageBuilder: (context, state) => NoTransitionPage(
+            pageBuilder: (context, state) => MaterialPage<void>(
               key: state.pageKey,
               child: const SplashPage(),
             ),
@@ -53,7 +80,7 @@ class AppRouter {
           GoRoute(
             name: OnBoardingPage.name,
             path: OnBoardingPage.path,
-            pageBuilder: (context, state) => NoTransitionPage(
+            pageBuilder: (context, state) => MaterialPage<void>(
               key: state.pageKey,
               child: const OnBoardingPage(),
             ),
@@ -61,9 +88,18 @@ class AppRouter {
           GoRoute(
             name: TestAppPage.name,
             path: TestAppPage.path,
-            pageBuilder: (context, state) => NoTransitionPage(
+            pageBuilder: (context, state) => MaterialPage<void>(
               key: state.pageKey,
               child: const TestAppPage(),
+            ),
+          ),
+          GoRoute(
+            name: CategoryPage.name,
+            path: CategoryPage.path,
+            parentNavigatorKey: _pageNavigatorKey,
+            pageBuilder: (context, state) => MaterialPage<void>(
+              key: state.pageKey,
+              child: const CategoryPage(),
             ),
           ),
           GoRoute(
@@ -73,7 +109,7 @@ class AppRouter {
             pageBuilder: (context, state) {
               final url = state.extra ?? 'https://www.orimi.com/pdf-test.pdf';
 
-              return NoTransitionPage(
+              return MaterialPage<void>(
                 key: state.pageKey,
                 child: PdfPage(
                   url: url.toString(),
@@ -109,7 +145,7 @@ class AppRouter {
       // if you can't find anything
 
     } else {
-      router.goNamed(TestAppPage.name);
+      router.goNamed(BottomNavBarPage.name);
     }
   }
 

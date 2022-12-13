@@ -4,17 +4,17 @@ linter:
   rules:
     public_member_api_docs: false
     sort_pub_dependencies: false
-    lines_longer_than_80_chars: false
+    # lines_longer_than_80_chars: false
     # non_constant_identifier_names: false
     # constant_identifier_names: false
 
 analyzer:
-  errors:
-    argument_type_not_assignable: ignore
-    invalid_assignment: ignore
+  # errors:
+    # argument_type_not_assignable: ignore
+    # invalid_assignment: ignore
   plugins:
     - dart_code_metrics
-  strong-mode:
+  # strong-mode:
     # implicit-dynamic: true
     # implicit-casts: true
   exclude:
@@ -23,16 +23,12 @@ analyzer:
     - "**/*.g.dart"
     - "**/*.freezed.dart"
     - "lib/l10n/**"
-    - "lib/env/**"
-    - "lib/**.graphql.dart"
+   
     - "lib/**.gen.dart"
     - "lib/generated_plugin_registrant.dart"
-    - "lib/pigeon.dart"
-    # Firebase
-    - "lib/src/common/constant/firebase_options.dart"
-    # Localization
-    - "lib/src/common/localization/intl/**"
-    - "lib/src/common/localization/l10n.dart"
+
+
+
     # Tests
     - "test/**.mocks.dart"
     # - "test/*.dart"
@@ -44,34 +40,45 @@ analyzer:
     # Assets
     - "assets/**"
 
+
 dart_code_metrics:
+
   rules:
     - prefer-single-widget-per-file:
-      ignore-private-widgets: true
+        ignore-private-widgets: true
     # flutter 
     - always-remove-listener
     - avoid-border-all
     - avoid-returning-widgets
     - avoid-shrink-wrap-in-lists
     - avoid-unnecessary-setstate
-
+    - avoid-expanded-as-spacer
     - avoid-wrapping-in-padding
     - check-for-equals-in-render-object-setters
     - consistent-update-render-object
     - prefer-const-border-radius
     - prefer-correct-edge-insets-constructor
-    # - prefer-extracting-callbacks
+    - prefer-extracting-callbacks
+
+    - prefer-using-list-view
+
+
+
 # DART
     - avoid-banned-imports
+    - avoid-cascade-after-if-null
     - avoid-collection-methods-with-unrelated-types
     - avoid-duplicate-exports
+    
     # - avoid-dynamic
     - avoid-global-state
     - avoid-ignoring-return-values
     # - avoid-late-keyword
+
+    
     - avoid-missing-enum-constant-in-map
     # - avoid-nested-conditional-expressions
-    # когда будешь переводить включи
+    # РєРѕРіРґР° Р±СѓРґРµС€СЊ РїРµСЂРµРІРѕРґРёС‚СЊ РІРєР»СЋС‡Рё
     # - avoid-non-ascii-symbols
     # - avoid-non-null-assertion
     # - avoid-passing-async-when-sync-expected
@@ -83,6 +90,7 @@ dart_code_metrics:
     - avoid-unrelated-type-assertions
     - avoid-unused-parameters
     - ban-name
+    
     - binary-expression-operand-order
     - double-literal-format
     # - format-comment
@@ -109,6 +117,9 @@ dart_code_metrics:
     - prefer-iterable-of
     - prefer-last
     # - prefer-match-file-name
+    - prefer-moving-to-variable
+    - prefer-static-class
+
     - prefer-moving-to-variable:
         allowed-duplicated-chains: 3
     - prefer-trailing-comma

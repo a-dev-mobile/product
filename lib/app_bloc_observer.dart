@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:product/core/log/log.dart';
 
+// ignore_for_file:avoid-non-ascii-symbols
 class AppBlocObserver extends BlocObserver {
   @override
   void onTransition(

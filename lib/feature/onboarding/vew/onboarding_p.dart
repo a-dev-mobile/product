@@ -5,9 +5,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 import 'package:product/app/style/style.dart';
-import 'package:product/core/test_app/test_app.dart';
+import 'package:product/feature/bottom_nav_bar/bottom_nav_bar.dart';
+
 import 'package:product/feature/onboarding/onboarding.dart';
+
 import 'package:product/feature/splash/splash.dart';
+import 'package:product/navigation/app_router.dart';
 
 class OnBoardingPage extends StatelessWidget {
   const OnBoardingPage({super.key});
@@ -41,8 +44,8 @@ class _OnBoardingViewState extends State<_OnBoardingView> {
   @override
   Widget build(BuildContext context) {
     final pageDecoration = PageDecoration(
-      titleTextStyle: AppTextStyle.headline5(),
-      bodyTextStyle: AppTextStyle.headline5(),
+      titleTextStyle: AppTextStyles.s16w500h24(),
+      bodyTextStyle: AppTextStyles.s14w400h20(),
       bodyPadding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
       imagePadding: EdgeInsets.zero,
     );
@@ -50,53 +53,55 @@ class _OnBoardingViewState extends State<_OnBoardingView> {
     return WillPopScope(
       onWillPop: () => _willPopScopeCall(context),
       child: IntroductionScreen(
-          pages: [
-            PageViewModel(
-              title: 'Распределение воды',
-              body:
-                  'Диализные пациенты должны тщательно контролировать потребление жидкости.\nЭто особенно важно, если ваши почки совсем не вырабатывают мочу',
-              image: const OnboardingItemImage(
-                assetName: 'assets/svg/onb_1.svg',
-              ),
-              decoration: pageDecoration,
+        pages: [
+          PageViewModel(
+            title: 'Распределение воды',
+            body:
+                'Диализные пациенты должны тщательно контролировать потребление жидкости.\nЭто особенно важно, если ваши почки совсем не вырабатывают мочу',
+            image: const OnboardingItemImage(
+              assetName: 'assets/svg/onb_1.svg',
             ),
-            PageViewModel(
-              title: 'Распределение еды',
-              body:
-                  'Для пациента на гемодиализе с массой тела 70–75 кг диета должна содержать 75–85 г белка и 2500–2800 ккал.\nЕсли не обеспечивается нужное количество белка и энергии, то закономерно развивается питательная (белково-энергетическая) недостаточность.',
-              image: const OnboardingItemImage(
-                assetName: 'assets/svg/onb_2.svg',
-              ),
-              decoration: pageDecoration,
+            decoration: pageDecoration,
+          ),
+          PageViewModel(
+            title: 'Распределение еды',
+            body:
+                'Для пациента на гемодиализе с массой тела 70–75 кг диета должна содержать 75–85 г белка и 2500–2800 ккал.\nЕсли не обеспечивается нужное количество белка и энергии, то закономерно развивается питательная (белково-энергетическая) недостаточность.',
+            image: const OnboardingItemImage(
+              assetName: 'assets/svg/onb_2.svg',
             ),
-            PageViewModel(
-              title: 'Важно!',
-              body:
-                  'Данное приложение не может и не преследует цели заменить Вашего лечашего врача.',
-              image: const OnboardingItemImage(
-                assetName: 'assets/svg/onb_3.svg',
-              ),
-              decoration: pageDecoration,
+            decoration: pageDecoration,
+          ),
+          PageViewModel(
+            title: 'Важно!',
+            body:
+                'Данное приложение не может и не преследует цели заменить Вашего лечашего врача.',
+            image: const OnboardingItemImage(
+              assetName: 'assets/svg/onb_3.svg',
             ),
-            PageViewModel(
-              title: 'Тест',
-              body:
-                  'Пройдите тест, что бы узнать риски рецидива болезни и получить оптимальные рекомендации.',
-              image: const OnboardingItemImage(
-                assetName: 'assets/svg/onb_4.svg',
-              ),
-              decoration: pageDecoration,
+            decoration: pageDecoration,
+          ),
+          PageViewModel(
+            title: 'Тест',
+            body:
+                'Пройдите тест, что бы узнать риски рецидива болезни и получить оптимальные рекомендации.',
+            image: const OnboardingItemImage(
+              assetName: 'assets/svg/onb_4.svg',
             ),
-          ],
-          showBackButton: true,
-          back: const Icon(Icons.arrow_back),
-          next: const Icon(Icons.arrow_forward),
-          done: const Text('Далее'),
-          onDone: () {
-            context.read<OnboardingCubit>().complectOnboarding();
+            decoration: pageDecoration,
+          ),
+        ],
+        showBackButton: true,
+        back: const Icon(Icons.arrow_back),
+        next: const Icon(Icons.arrow_forward),
+        done: const Text('Далее'),
+        // ignore: prefer-extracting-callbacks
+        onDone: () {
+          context.read<OnboardingCubit>().complectOnboarding();
 
-             GoRouter.of(context).goNamed(TestAppPage.name);
-          },),
+          context.read<AppRouter>().router.goNamed(BottomNavBarPage.name);
+        },
+      ),
     );
   }
 }
