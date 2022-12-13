@@ -7,8 +7,8 @@ class ThemeCubit extends HydratedCubit<ThemeMode> {
   ThemeCubit() : super(ThemeMode.light);
 
   /// switch theme 1
-  void toggleTheme({required bool isDark}) {
-    isDark ? emit(ThemeMode.dark) : emit(ThemeMode.light);
+  void toggleTheme({required ThemeMode theme}) {
+    emit(theme);
   }
 
   /// switch theme 2

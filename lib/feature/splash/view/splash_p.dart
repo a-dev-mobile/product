@@ -19,8 +19,6 @@ class SplashPage extends StatelessWidget {
       lazy: false,
       create: (context) => SplashCubit(
         router: context.read<AppRouter>(),
-
-    
       )..load(),
       child: const _SplashView(),
     );

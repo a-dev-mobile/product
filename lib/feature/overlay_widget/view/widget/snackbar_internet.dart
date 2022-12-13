@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 
 import 'package:product/app/style/style.dart';
 import 'package:product/l10n/l10n.dart';
@@ -18,14 +18,14 @@ class SnackbarInternet extends StatelessWidget {
       child: Positioned(
         top: 0,
         child: Container(
-          color: Theme.of(context).errorColor,
-          width: 1.sw,
-          height: 50.h,
+          color: context.theme.errorColor,
+          width: context.widthPx,
+          height: 50,
           child: Align(
             alignment: Alignment.bottomCenter,
             child: Text(
               l.no_internet,
-              style: AppTextStyle.headline5(color: Colors.white),
+              style: AppTextStyles.s16w500h24(Colors.white),
             ),
           ),
         ),

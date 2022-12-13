@@ -1,10 +1,9 @@
-// ignore_for_file: avoid_positional_boolean_parameters
+// ignore_for_file: avoid_positional_boolean_parameters, constant_identifier_names, lines_longer_than_80_chars
 
 import 'dart:convert';
 
-
 import 'package:product/core/log/log.dart';
-
+import 'package:product/feature/search/search.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -29,8 +28,6 @@ class LocalStorage {
   }
 // ******************************
 
-
-
 // ******************************
   static const _completeOnboarding = 'completed_onboarding';
 
@@ -42,6 +39,80 @@ class LocalStorage {
     return setBool(key: _completeOnboarding, value: true);
   }
 
+// ******************************
+  static const _locale = 'locale';
+
+  Future<String> getLocale() {
+    return getString(key: _locale);
+  }
+
+  Future<void> setLocale(String locale) {
+    return setString(key: _locale, value: locale);
+  }
+
+// ******************************
+  static const _db_patch = '_db_patch';
+
+  Future<String> getDbPatch() {
+    return getString(key: _db_patch);
+  }
+
+  Future<void> setDbPatch(String path) {
+    return setString(key: _db_patch, value: path);
+  }
+
+// ******************************
+  static const _db_name = '_db_name';
+
+  Future<String> getDbName() {
+    return getString(key: _db_name);
+  }
+
+  Future<void> setDbName(String value) {
+    return setString(key: _db_name, value: value);
+  }
+
+// ******************************
+
+  static const _lastSearchList = 'saved_list';
+
+  Future<List<String>> getListSearch() {
+    return getStringList(key: _lastSearchList);
+  }
+
+  Future<void> setLastSearch(String value) async {
+    final list = await getStringList(key: _lastSearchList);
+
+    final growableList = List<String>.empty(growable: true)..addAll(list);
+    if (growableList.contains(value)) growableList.remove(value);
+    growableList.add(value);
+
+    await setStringList(key: _lastSearchList, value: growableList);
+  }
+
+// ******************************
+
+  static const _categories = 'categories';
+
+  Future<List<SelectedCategoryModel>> getSelectedCategories() async {
+    final listRaw = await getStringList(key: _categories);
+
+    final list = <SelectedCategoryModel>[];
+    for (final i in listRaw) {
+      list.add(SelectedCategoryModel.fromJson(i));
+    }
+
+    return list;
+  }
+
+  Future<void> setSelectedCategories(List<SelectedCategoryModel> value) {
+    final listString = <String>[];
+    for (final i in value) {
+      listString.add(i.toJson());
+    }
+
+    return setStringList(key: _categories, value: listString);
+  }
 
 // ******************************
   /// SaveString.
@@ -64,8 +135,6 @@ class LocalStorage {
     }
   }
 
-
-
   Future<void> setJson({
     required String key,
     required Map<String, dynamic> value,
@@ -76,8 +145,6 @@ class LocalStorage {
       log.i('$_set $_info > $key\nvalue = $value');
     }
   }
-
-
 
   /// SaveBool.
   Future<void> setBool({required String key, required bool value}) async {

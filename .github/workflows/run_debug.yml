@@ -1,13 +1,13 @@
 name: "Build android"
-on:
-  push:
-    branches:
-      - develop
-      - "release/**"
-  pull_request:
-    branches:
-      - develop
-      - master
+on: [push]
+  # push:
+  #   branches:
+  #     - develop
+  #     - "release/**"
+  # pull_request:
+  #   branches:
+  #     - develop
+  #     - master
 jobs:
   build_apk:
     name: Build Flutter (Android)

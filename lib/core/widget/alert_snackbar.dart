@@ -1,10 +1,7 @@
-
 import 'package:flash/flash.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:product/app/style/style.dart';
-
-
 
 class MySnackBar {
   static void show({
@@ -144,10 +141,9 @@ class MyAlert extends StatelessWidget {
                     const SizedBox(width: 10),
                     Expanded(
                       child: Text(
-                     
                         title,
-                        style: AppTextStyle.SEMI_BOLD_14(
-                          color: diff.colorText,
+                        style: AppTextStyles.s14w500h20(
+                          diff.colorText,
                         ),
                       ),
                     ),
@@ -170,12 +166,8 @@ class MyAlert extends StatelessWidget {
                     alignment: Alignment.centerLeft,
                     child: textMsg != null
                         ? Text(
-                          
                             textMsg!,
-                          
-                            style: AppTextStyle.REGULAR_14(
-                                // color: diff.colorText,
-                                ),
+                            style: AppTextStyles.s14w400h20(),
                           )
                         : widgetMsg!,
                   ),
@@ -206,6 +198,7 @@ class MyAlert extends StatelessWidget {
     );
   }
 }
+
 @immutable
 class _AlertChangingElements {
   const _AlertChangingElements({

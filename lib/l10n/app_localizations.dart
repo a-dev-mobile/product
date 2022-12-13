@@ -93,48 +93,6 @@ abstract class AppLocalizations {
     Locale('ru')
   ];
 
-  /// No description provided for @sig_contract_sent_code_number.
-  ///
-  /// In ru, this message translates to:
-  /// **'Для подписания договора мы отправили SMS с кодом на номер'**
-  String get sig_contract_sent_code_number;
-
-  /// No description provided for @password.
-  ///
-  /// In ru, this message translates to:
-  /// **'Пароль'**
-  String get password;
-
-  /// No description provided for @loginPasswordIncorrect.
-  ///
-  /// In ru, this message translates to:
-  /// **'Логин или пароль неверны'**
-  String get loginPasswordIncorrect;
-
-  /// No description provided for @i_aware_agree_with_following.
-  ///
-  /// In ru, this message translates to:
-  /// **'Я ознакомлен и согласен со следующим'**
-  String get i_aware_agree_with_following;
-
-  /// No description provided for @signing_contract.
-  ///
-  /// In ru, this message translates to:
-  /// **'Подписание договора'**
-  String get signing_contract;
-
-  /// No description provided for @incorrect_code_entered.
-  ///
-  /// In ru, this message translates to:
-  /// **'Введен неправильный код'**
-  String get incorrect_code_entered;
-
-  /// No description provided for @passport_information.
-  ///
-  /// In ru, this message translates to:
-  /// **'Паспортная информация'**
-  String get passport_information;
-
   /// No description provided for @clickAgainToExit.
   ///
   /// In ru, this message translates to:
@@ -144,26 +102,8 @@ abstract class AppLocalizations {
   /// No description provided for @app_name.
   ///
   /// In ru, this message translates to:
-  /// **'Nado Deneg'**
+  /// **'Продукты'**
   String get app_name;
-
-  /// No description provided for @amount.
-  ///
-  /// In ru, this message translates to:
-  /// **'Сумма'**
-  String get amount;
-
-  /// No description provided for @term.
-  ///
-  /// In ru, this message translates to:
-  /// **'Срок'**
-  String get term;
-
-  /// No description provided for @rub.
-  ///
-  /// In ru, this message translates to:
-  /// **'руб'**
-  String get rub;
 
   /// No description provided for @days1.
   ///
@@ -182,66 +122,6 @@ abstract class AppLocalizations {
   /// In ru, this message translates to:
   /// **'дня'**
   String get days3;
-
-  /// No description provided for @amountOfCredit.
-  ///
-  /// In ru, this message translates to:
-  /// **'Сумма кредита'**
-  String get amountOfCredit;
-
-  /// No description provided for @percent.
-  ///
-  /// In ru, this message translates to:
-  /// **'Проценты'**
-  String get percent;
-
-  /// No description provided for @toMaturity.
-  ///
-  /// In ru, this message translates to:
-  /// **'К погашению'**
-  String get toMaturity;
-
-  /// No description provided for @getMoney.
-  ///
-  /// In ru, this message translates to:
-  /// **'Получить деньги'**
-  String get getMoney;
-
-  /// No description provided for @get_new_password.
-  ///
-  /// In ru, this message translates to:
-  /// **'Получить новый пароль'**
-  String get get_new_password;
-
-  /// No description provided for @iHavePromoCode.
-  ///
-  /// In ru, this message translates to:
-  /// **'Ввести промокод'**
-  String get iHavePromoCode;
-
-  /// No description provided for @enterPromoCode.
-  ///
-  /// In ru, this message translates to:
-  /// **'Ввести промокод'**
-  String get enterPromoCode;
-
-  /// No description provided for @firstLoan0Percent.
-  ///
-  /// In ru, this message translates to:
-  /// **'Первый заём 0%'**
-  String get firstLoan0Percent;
-
-  /// No description provided for @selectAmountAndTerm.
-  ///
-  /// In ru, this message translates to:
-  /// **'Выберите сумму и срок'**
-  String get selectAmountAndTerm;
-
-  /// No description provided for @changing_phone_number.
-  ///
-  /// In ru, this message translates to:
-  /// **'Изменение номера телефона'**
-  String get changing_phone_number;
 
   /// No description provided for @continueTo.
   ///
@@ -267,35 +147,11 @@ abstract class AppLocalizations {
   /// **'Отсутствует доступ к интернету'**
   String get no_internet;
 
-  /// No description provided for @login.
-  ///
-  /// In ru, this message translates to:
-  /// **'Войти'**
-  String get login;
-
-  /// No description provided for @free_charge_russia.
-  ///
-  /// In ru, this message translates to:
-  /// **'Бесплатно по России'**
-  String get free_charge_russia;
-
-  /// No description provided for @password_recovery.
-  ///
-  /// In ru, this message translates to:
-  /// **'Восстановление пароля'**
-  String get password_recovery;
-
   /// No description provided for @field_must_be_completed.
   ///
   /// In ru, this message translates to:
   /// **'Это поле необходимо заполнить'**
   String get field_must_be_completed;
-
-  /// No description provided for @start_entering_phone_with_9.
-  ///
-  /// In ru, this message translates to:
-  /// **'Номер телефона начинайте вводить с 9'**
-  String get start_entering_phone_with_9;
 
   /// No description provided for @you_entered_1_10_characters.
   ///
@@ -465,89 +321,11 @@ abstract class AppLocalizations {
   /// **'Далее'**
   String get next;
 
-  /// No description provided for @forgot_password.
-  ///
-  /// In ru, this message translates to:
-  /// **'Забыли пароль?'**
-  String get forgot_password;
-
-  /// No description provided for @signup.
-  ///
-  /// In ru, this message translates to:
-  /// **'Зарегистрироваться'**
-  String get signup;
-
-  /// No description provided for @no_account_yet.
-  ///
-  /// In ru, this message translates to:
-  /// **'Ещё нет аккаунта?'**
-  String get no_account_yet;
-
-  /// No description provided for @enter_sur_name.
-  ///
-  /// In ru, this message translates to:
-  /// **'Это обязательное поле. Введите фамилию'**
-  String get enter_sur_name;
-
-  /// No description provided for @enter_name.
-  ///
-  /// In ru, this message translates to:
-  /// **'Это обязательное поле. Введите имя'**
-  String get enter_name;
-
   /// No description provided for @required_field.
   ///
   /// In ru, this message translates to:
   /// **'Это обязательное поле'**
   String get required_field;
-
-  /// No description provided for @enter_middle_patronymic.
-  ///
-  /// In ru, this message translates to:
-  /// **'Это обязательное поле. Введите отчество'**
-  String get enter_middle_patronymic;
-
-  /// No description provided for @sur_name.
-  ///
-  /// In ru, this message translates to:
-  /// **'Фамилия'**
-  String get sur_name;
-
-  /// No description provided for @name.
-  ///
-  /// In ru, this message translates to:
-  /// **'Имя'**
-  String get name;
-
-  /// No description provided for @patronymic.
-  ///
-  /// In ru, this message translates to:
-  /// **'Отчество'**
-  String get patronymic;
-
-  /// No description provided for @what_gender.
-  ///
-  /// In ru, this message translates to:
-  /// **'Пол'**
-  String get what_gender;
-
-  /// No description provided for @male.
-  ///
-  /// In ru, this message translates to:
-  /// **'Мужской'**
-  String get male;
-
-  /// No description provided for @female.
-  ///
-  /// In ru, this message translates to:
-  /// **'Женский'**
-  String get female;
-
-  /// No description provided for @login_registration.
-  ///
-  /// In ru, this message translates to:
-  /// **'Войти/зарегистрироваться'**
-  String get login_registration;
 
   /// No description provided for @enter_cyrillic_only.
   ///
@@ -567,66 +345,6 @@ abstract class AppLocalizations {
   /// **'Максимальная длина текста'**
   String get max_text_length;
 
-  /// No description provided for @recover_password_enter_phone_registration.
-  ///
-  /// In ru, this message translates to:
-  /// **'Для восстановления пароля, введите телефон указанный вами ранее при регистрации'**
-  String get recover_password_enter_phone_registration;
-
-  /// No description provided for @reset_password_msg.
-  ///
-  /// In ru, this message translates to:
-  /// **'Введите свой номер телефона и мы отправим вам новый пароль для входа в личный кабинет'**
-  String get reset_password_msg;
-
-  /// No description provided for @confirming_phone_number.
-  ///
-  /// In ru, this message translates to:
-  /// **'Подтверждение номера телефона'**
-  String get confirming_phone_number;
-
-  /// No description provided for @we_sent_sms_code.
-  ///
-  /// In ru, this message translates to:
-  /// **'Мы отправили вам SMS с кодом на номер'**
-  String get we_sent_sms_code;
-
-  /// No description provided for @sent_sms_code.
-  ///
-  /// In ru, this message translates to:
-  /// **'Код был отправлен на номер телефона'**
-  String get sent_sms_code;
-
-  /// No description provided for @login_your_account.
-  ///
-  /// In ru, this message translates to:
-  /// **'Вход в личный кабинет'**
-  String get login_your_account;
-
-  /// No description provided for @password_was_sent.
-  ///
-  /// In ru, this message translates to:
-  /// **'Пароль был ранее выслан на номер'**
-  String get password_was_sent;
-
-  /// No description provided for @please_enter_code.
-  ///
-  /// In ru, this message translates to:
-  /// **'Введите код в поле ниже'**
-  String get please_enter_code;
-
-  /// No description provided for @loan_card_Russia.
-  ///
-  /// In ru, this message translates to:
-  /// **'Кредит онлайн\nна карту в России'**
-  String get loan_card_Russia;
-
-  /// No description provided for @send_code_again.
-  ///
-  /// In ru, this message translates to:
-  /// **'Отправить код еще раз'**
-  String get send_code_again;
-
   /// No description provided for @main.
   ///
   /// In ru, this message translates to:
@@ -645,71 +363,11 @@ abstract class AppLocalizations {
   /// **'Подтвердить'**
   String get confirm;
 
-  /// No description provided for @wrongCode.
-  ///
-  /// In ru, this message translates to:
-  /// **'Неверный код. Попробуйте ещё раз'**
-  String get wrongCode;
-
-  /// No description provided for @personal_information.
-  ///
-  /// In ru, this message translates to:
-  /// **'Личная информация'**
-  String get personal_information;
-
-  /// No description provided for @changing_conditions.
-  ///
-  /// In ru, this message translates to:
-  /// **'Изменение условий'**
-  String get changing_conditions;
-
-  /// No description provided for @code_sms.
-  ///
-  /// In ru, this message translates to:
-  /// **'Код из SMS'**
-  String get code_sms;
-
-  /// No description provided for @banner_loan_approved.
-  ///
-  /// In ru, this message translates to:
-  /// **'Заявка на кредит одобрена. Для получения денег - подтвердите условия'**
-  String get banner_loan_approved;
-
   /// No description provided for @change.
   ///
   /// In ru, this message translates to:
   /// **'Изменить'**
   String get change;
-
-  /// No description provided for @phone_number.
-  ///
-  /// In ru, this message translates to:
-  /// **'Номер телефона'**
-  String get phone_number;
-
-  /// No description provided for @sign_in.
-  ///
-  /// In ru, this message translates to:
-  /// **'Вход в личный кабинет'**
-  String get sign_in;
-
-  /// No description provided for @loan_application.
-  ///
-  /// In ru, this message translates to:
-  /// **'Заявка на заём'**
-  String get loan_application;
-
-  /// No description provided for @description_under_phone.
-  ///
-  /// In ru, this message translates to:
-  /// **'Указанный вами номер телефона является верификационным, и на него будут отправляться подтверждающие СМС. Также он является логином в личном кабинете'**
-  String get description_under_phone;
-
-  /// No description provided for @probability_loan_approval.
-  ///
-  /// In ru, this message translates to:
-  /// **'Вероятность одобрения займа:'**
-  String get probability_loan_approval;
 
   /// No description provided for @setting.
   ///
@@ -734,12 +392,6 @@ abstract class AppLocalizations {
   /// In ru, this message translates to:
   /// **'Английский'**
   String get lang_en;
-
-  /// No description provided for @dark_theme.
-  ///
-  /// In ru, this message translates to:
-  /// **'Темная тема'**
-  String get dark_theme;
 
   /// No description provided for @generalError.
   ///
@@ -812,6 +464,36 @@ abstract class AppLocalizations {
   /// In ru, this message translates to:
   /// **'Нет данных'**
   String get no_data;
+
+  /// No description provided for @all_product.
+  ///
+  /// In ru, this message translates to:
+  /// **'Все продукты'**
+  String get all_product;
+
+  /// No description provided for @app_theme.
+  ///
+  /// In ru, this message translates to:
+  /// **'Тема приложения'**
+  String get app_theme;
+
+  /// No description provided for @dark_theme.
+  ///
+  /// In ru, this message translates to:
+  /// **'Темная'**
+  String get dark_theme;
+
+  /// No description provided for @light_theme.
+  ///
+  /// In ru, this message translates to:
+  /// **'Светлая'**
+  String get light_theme;
+
+  /// No description provided for @g.
+  ///
+  /// In ru, this message translates to:
+  /// **'г'**
+  String get g;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
