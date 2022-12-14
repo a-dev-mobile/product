@@ -22,22 +22,14 @@ class ValidSearch extends FormzInput<String, ValidSearchError> {
             ? ValidSearchError.leght1
             : value.length < 3
                 ? ValidSearchError.leght2
-               
-                    : null;
+                : null;
   }
 }
 
 extension ValidSearchExtension on ValidSearch {
-  ValidSearchError get isEmpty => ValidSearchError.isEmpty;
-
   ValidSearchError get leght1 => ValidSearchError.leght1;
   ValidSearchError get leght2 => ValidSearchError.leght2;
-
+  ValidSearchError get isEmpty => ValidSearchError.isEmpty;
 }
 
-enum ValidSearchError {
-  isEmpty,
-  leght1,
-  leght2,
-
-}
+enum ValidSearchError { leght1, leght2, isEmpty }

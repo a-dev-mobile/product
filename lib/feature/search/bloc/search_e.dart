@@ -14,17 +14,6 @@ class SearchEventClean extends SearchEvent {
   const SearchEventClean();
 }
 
-class SearchEventGoToCategories extends SearchEvent {
-  const SearchEventGoToCategories(this.context);
-
-  final BuildContext context;
-}
-
-class SearchEventChangeActiveCategory extends SearchEvent {
-  const SearchEventChangeActiveCategory(this.activeCategory);
-
-  final String activeCategory;
-}
 
 class SearchEventIncrementWeight extends SearchEvent {
   const SearchEventIncrementWeight({required this.id});
@@ -40,16 +29,33 @@ class SearchEventFind extends SearchEvent {
   const SearchEventFind({
     required this.l,
     required this.find,
-    this.isSearchInAllCategories = true,
   });
 
   final String find;
+
   final AppLocalizations l;
-  final bool isSearchInAllCategories;
 
   @override
   bool get stringify => true;
 
   @override
-  List<Object> get props => [find, isSearchInAllCategories];
+  List<Object> get props => [find, l];
+}
+
+class SearchEventFindSelectedCategory extends SearchEvent {
+  const SearchEventFindSelectedCategory({
+    required this.context,
+    this.idCategory = -1,
+    this.isOpenPageCategories = false,
+  });
+
+  final int idCategory;
+  final bool isOpenPageCategories;
+  final BuildContext context;
+
+  @override
+  bool get stringify => true;
+
+  @override
+  List<Object> get props => [idCategory];
 }

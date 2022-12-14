@@ -1,59 +1,64 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-class SearchField extends StatefulWidget {
+import 'package:product/feature/search/search.dart';
+import 'package:product/l10n/l10n.dart';
+
+class SearchField extends StatelessWidget {
   const SearchField({
     super.key,
-    required this.onChanged,
-    required this.onClean,
-    required this.initText,
   });
-
-  final void Function(String value)? onChanged;
-  final void Function() onClean;
-  final String initText;
-  @override
-  State<SearchField> createState() => _SearchFieldState();
-}
-
-class _SearchFieldState extends State<SearchField> {
-  late final TextEditingController controller;
-
-  @override
-  void initState() {
-    super.initState();
-    controller = TextEditingController(text: widget.initText);
-  }
-
-  @override
-  void dispose() {
-    controller.dispose();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
-    return TextField(
-      controller: controller,
-      onChanged: widget.onChanged,
-      keyboardType: TextInputType.name,
-      // autofocus: true,
-      decoration: InputDecoration(
-        suffixIcon: IconButton(
-          icon: const Icon(Icons.clear),
-          // ignore: prefer-extracting-callbacks
-          onPressed: () {
-            controller.text = '';
-            widget.onClean();
-          },
-        ),
-        // labelText: 'Найти продукт',
-        hintText: 'Найти продукт',
-        // fillColor: Theme.of(context).colorScheme.onSecondary,
+    final bloc = context.read<SearchBloc>();
+    final l = context.l10n;
+    final controller = TextEditingController();
 
-        focusedBorder: InputBorder.none,
-        border: InputBorder.none,
-        enabledBorder: InputBorder.none,
-      ),
+    return BlocBuilder<SearchBloc, SearchState>(
+      buildWhen: (p, c) =>
+          p.validSearch.value != c.validSearch.value ||
+          p.validSearch.status != c.validSearch.status,
+      builder: (context, state) {
+        final valid = state.validSearch;
+        controller
+          ..text = valid.value
+          ..selection = TextSelection.collapsed(offset: controller.text.length);
+
+        return TextField(
+          textInputAction: TextInputAction.done,
+          controller: controller,
+          onChanged: (v) => bloc.add(SearchEventFind(find: v, l: l)),
+          keyboardType: TextInputType.name,
+          decoration: InputDecoration(
+            suffixIcon: IconButton(
+              icon: const Icon(Icons.clear),
+              onPressed: () => _tapClean(controller, bloc),
+            ),
+            hintText: 'Найти продукт',
+            focusedBorder: InputBorder.none,
+            border: InputBorder.none,
+            errorBorder: InputBorder.none,
+            enabledBorder: InputBorder.none,
+            disabledBorder: InputBorder.none,
+            focusedErrorBorder: InputBorder.none,
+            errorText: valid.pure
+                ? null
+                 : valid.error == valid.isEmpty
+                    ? null
+                : valid.error == valid.leght1
+                    ? l.you_entered_1_3_characters
+                    : valid.error == valid.leght2
+                        ? l.you_entered_2_3_characters
+                        : null,
+          ),
+        );
+      },
     );
+  }
+
+  void _tapClean(TextEditingController controller, SearchBloc bloc) {
+    controller.text = '';
+    bloc.add(const SearchEventClean());
   }
 }

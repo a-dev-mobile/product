@@ -11,6 +11,7 @@ const _initWeightProduct = 100;
 @immutable
 class ProductModel {
   final int id;
+  final int idCategory;
   final int weight;
 
   final String category;
@@ -18,7 +19,8 @@ class ProductModel {
   final SourceModel source;
   final List<NutrientModel> nutrients;
   const ProductModel({
-    this.id = 0,
+    this.id = -1,
+    this.idCategory = -1,
     this.weight = _initWeightProduct,
     this.category = '',
     this.product = '',
@@ -28,6 +30,7 @@ class ProductModel {
 
   ProductModel copyWith({
     int? id,
+    int? idCategory,
     int? weight,
     String? category,
     String? product,
@@ -36,6 +39,7 @@ class ProductModel {
   }) {
     return ProductModel(
       id: id ?? this.id,
+      idCategory: idCategory ?? this.idCategory,
       weight: weight ?? this.weight,
       category: category ?? this.category,
       product: product ?? this.product,
@@ -47,6 +51,7 @@ class ProductModel {
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'id': id,
+      'idCategory': idCategory,
       'weight': weight,
       'category': category,
       'product': product,
@@ -58,6 +63,7 @@ class ProductModel {
   factory ProductModel.fromMap(Map<String, dynamic> map) {
     return ProductModel(
       id: map['id'] as int,
+      idCategory: map['idCategory'] as int,
       weight: map['weight'] as int,
       category: map['category'] as String,
       product: map['product'] as String,
@@ -77,7 +83,7 @@ class ProductModel {
 
   @override
   String toString() {
-    return 'ProductModel(id: $id, weight: $weight, category: $category, product: $product, source: $source, nutrients: $nutrients)';
+    return 'ProductModel(id: $id, idCategory: $idCategory, weight: $weight, category: $category, product: $product, source: $source, nutrients: $nutrients)';
   }
 
   @override
@@ -85,6 +91,7 @@ class ProductModel {
     if (identical(this, other)) return true;
 
     return other.id == id &&
+        other.idCategory == idCategory &&
         other.weight == weight &&
         other.category == category &&
         other.product == product &&
@@ -95,6 +102,7 @@ class ProductModel {
   @override
   int get hashCode {
     return id.hashCode ^
+        idCategory.hashCode ^
         weight.hashCode ^
         category.hashCode ^
         product.hashCode ^

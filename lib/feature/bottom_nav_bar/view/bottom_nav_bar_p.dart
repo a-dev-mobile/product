@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:product/feature/search/search.dart';
 import 'package:product/feature/setting/setting_tab.dart';
+import 'package:product/l10n/l10n.dart';
 
 class BottomNavBarPage extends StatefulWidget {
   const BottomNavBarPage({
@@ -29,17 +30,19 @@ class _BottomNavBarPageState extends State<BottomNavBarPage> {
 
   @override
   Widget build(BuildContext context) {
+    final l = context.l10n;
+    
     return Scaffold(
       body: IndexedStack(index: _selectedIndex, children: _pages),
       bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
+        items:  <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(Icons.home_filled),
-            label: 'Главное',
+            icon: const Icon(Icons.home_filled),
+            label: l.main,
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.settings),
-            label: 'Настройки',
+            icon: const Icon(Icons.settings),
+            label: l.setting,
           ),
         ],
         currentIndex: _selectedIndex,

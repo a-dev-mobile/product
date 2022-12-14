@@ -93,35 +93,11 @@ abstract class AppLocalizations {
     Locale('ru')
   ];
 
-  /// No description provided for @clickAgainToExit.
-  ///
-  /// In ru, this message translates to:
-  /// **'Нажмите ещё раз чтобы выйти'**
-  String get clickAgainToExit;
-
   /// No description provided for @app_name.
   ///
   /// In ru, this message translates to:
-  /// **'Продукты'**
+  /// **'Состав продуктов'**
   String get app_name;
-
-  /// No description provided for @days1.
-  ///
-  /// In ru, this message translates to:
-  /// **'дней'**
-  String get days1;
-
-  /// No description provided for @days2.
-  ///
-  /// In ru, this message translates to:
-  /// **'день'**
-  String get days2;
-
-  /// No description provided for @days3.
-  ///
-  /// In ru, this message translates to:
-  /// **'дня'**
-  String get days3;
 
   /// No description provided for @continueTo.
   ///
@@ -153,197 +129,23 @@ abstract class AppLocalizations {
   /// **'Это поле необходимо заполнить'**
   String get field_must_be_completed;
 
-  /// No description provided for @you_entered_1_10_characters.
+  /// No description provided for @you_entered_1_3_characters.
   ///
   /// In ru, this message translates to:
-  /// **'Вы ввели 1/10 символов'**
-  String get you_entered_1_10_characters;
+  /// **'Вы ввели 1/3 символов'**
+  String get you_entered_1_3_characters;
 
-  /// No description provided for @you_entered_2_10_characters.
+  /// No description provided for @you_entered_2_3_characters.
   ///
   /// In ru, this message translates to:
-  /// **'Вы ввели 2/10 символов'**
-  String get you_entered_2_10_characters;
-
-  /// No description provided for @you_entered_3_10_characters.
-  ///
-  /// In ru, this message translates to:
-  /// **'Вы ввели 3/10 символов'**
-  String get you_entered_3_10_characters;
-
-  /// No description provided for @you_entered_4_10_characters.
-  ///
-  /// In ru, this message translates to:
-  /// **'Вы ввели 4/10 символов'**
-  String get you_entered_4_10_characters;
-
-  /// No description provided for @you_entered_5_10_characters.
-  ///
-  /// In ru, this message translates to:
-  /// **'Вы ввели 5/10 символов'**
-  String get you_entered_5_10_characters;
-
-  /// No description provided for @you_entered_6_10_characters.
-  ///
-  /// In ru, this message translates to:
-  /// **'Вы ввели 6/10 символов'**
-  String get you_entered_6_10_characters;
-
-  /// No description provided for @you_entered_7_10_characters.
-  ///
-  /// In ru, this message translates to:
-  /// **'Вы ввели 7/10 символов'**
-  String get you_entered_7_10_characters;
-
-  /// No description provided for @you_entered_8_10_characters.
-  ///
-  /// In ru, this message translates to:
-  /// **'Вы ввели 8/10 символов'**
-  String get you_entered_8_10_characters;
-
-  /// No description provided for @you_entered_9_10_characters.
-  ///
-  /// In ru, this message translates to:
-  /// **'Вы ввели 9/10 символов'**
-  String get you_entered_9_10_characters;
-
-  /// No description provided for @you_entered_1_11_characters.
-  ///
-  /// In ru, this message translates to:
-  /// **'Вы ввели 1/11 символов'**
-  String get you_entered_1_11_characters;
-
-  /// No description provided for @you_entered_2_11_characters.
-  ///
-  /// In ru, this message translates to:
-  /// **'Вы ввели 2/11 символов'**
-  String get you_entered_2_11_characters;
-
-  /// No description provided for @you_entered_3_11_characters.
-  ///
-  /// In ru, this message translates to:
-  /// **'Вы ввели 3/11 символов'**
-  String get you_entered_3_11_characters;
-
-  /// No description provided for @you_entered_4_11_characters.
-  ///
-  /// In ru, this message translates to:
-  /// **'Вы ввели 4/11 символов'**
-  String get you_entered_4_11_characters;
-
-  /// No description provided for @you_entered_5_11_characters.
-  ///
-  /// In ru, this message translates to:
-  /// **'Вы ввели 5/11 символов'**
-  String get you_entered_5_11_characters;
-
-  /// No description provided for @you_entered_6_11_characters.
-  ///
-  /// In ru, this message translates to:
-  /// **'Вы ввели 6/11 символов'**
-  String get you_entered_6_11_characters;
-
-  /// No description provided for @you_entered_7_11_characters.
-  ///
-  /// In ru, this message translates to:
-  /// **'Вы ввели 7/11 символов'**
-  String get you_entered_7_11_characters;
-
-  /// No description provided for @you_entered_8_11_characters.
-  ///
-  /// In ru, this message translates to:
-  /// **'Вы ввели 8/11 символов'**
-  String get you_entered_8_11_characters;
-
-  /// No description provided for @you_entered_9_11_characters.
-  ///
-  /// In ru, this message translates to:
-  /// **'Вы ввели 9/11 символов'**
-  String get you_entered_9_11_characters;
-
-  /// No description provided for @you_entered_10_11_characters.
-  ///
-  /// In ru, this message translates to:
-  /// **'Вы ввели 10/11 символов'**
-  String get you_entered_10_11_characters;
-
-  /// No description provided for @you_entered_1_4_characters.
-  ///
-  /// In ru, this message translates to:
-  /// **'Вы ввели 1/4 символов'**
-  String get you_entered_1_4_characters;
-
-  /// No description provided for @you_entered_2_4_characters.
-  ///
-  /// In ru, this message translates to:
-  /// **'Вы ввели 2/4 символов'**
-  String get you_entered_2_4_characters;
-
-  /// No description provided for @you_entered_3_4_characters.
-  ///
-  /// In ru, this message translates to:
-  /// **'Вы ввели 3/4 символов'**
-  String get you_entered_3_4_characters;
-
-  /// No description provided for @you_entered_1_6_characters.
-  ///
-  /// In ru, this message translates to:
-  /// **'Вы ввели 1/6 символов'**
-  String get you_entered_1_6_characters;
-
-  /// No description provided for @you_entered_2_6_characters.
-  ///
-  /// In ru, this message translates to:
-  /// **'Вы ввели 2/6 символов'**
-  String get you_entered_2_6_characters;
-
-  /// No description provided for @you_entered_3_6_characters.
-  ///
-  /// In ru, this message translates to:
-  /// **'Вы ввели 3/6 символов'**
-  String get you_entered_3_6_characters;
-
-  /// No description provided for @you_entered_4_6_characters.
-  ///
-  /// In ru, this message translates to:
-  /// **'Вы ввели 4/6 символов'**
-  String get you_entered_4_6_characters;
-
-  /// No description provided for @you_entered_5_6_characters.
-  ///
-  /// In ru, this message translates to:
-  /// **'Вы ввели 5/6 символов'**
-  String get you_entered_5_6_characters;
+  /// **'Вы ввели 2/3 символов'**
+  String get you_entered_2_3_characters;
 
   /// No description provided for @next.
   ///
   /// In ru, this message translates to:
   /// **'Далее'**
   String get next;
-
-  /// No description provided for @required_field.
-  ///
-  /// In ru, this message translates to:
-  /// **'Это обязательное поле'**
-  String get required_field;
-
-  /// No description provided for @enter_cyrillic_only.
-  ///
-  /// In ru, this message translates to:
-  /// **'Допускаются только русские буквы'**
-  String get enter_cyrillic_only;
-
-  /// No description provided for @invalid_characters_used.
-  ///
-  /// In ru, this message translates to:
-  /// **'Используются недопустимые символы'**
-  String get invalid_characters_used;
-
-  /// No description provided for @max_text_length.
-  ///
-  /// In ru, this message translates to:
-  /// **'Максимальная длина текста'**
-  String get max_text_length;
 
   /// No description provided for @main.
   ///
@@ -441,12 +243,6 @@ abstract class AppLocalizations {
   /// **'Выход из приложения'**
   String get exit_app;
 
-  /// No description provided for @exit_app_warning.
-  ///
-  /// In ru, this message translates to:
-  /// **'Вы уверены, что хотите выйти из приложения?'**
-  String get exit_app_warning;
-
   /// No description provided for @yes.
   ///
   /// In ru, this message translates to:
@@ -488,6 +284,24 @@ abstract class AppLocalizations {
   /// In ru, this message translates to:
   /// **'Светлая'**
   String get light_theme;
+
+  /// No description provided for @you_recently_searched.
+  ///
+  /// In ru, this message translates to:
+  /// **'Вы недавно искали'**
+  String get you_recently_searched;
+
+  /// No description provided for @clear.
+  ///
+  /// In ru, this message translates to:
+  /// **'Очистить'**
+  String get clear;
+
+  /// No description provided for @privacy_policy.
+  ///
+  /// In ru, this message translates to:
+  /// **'Политика конфиденциальности'**
+  String get privacy_policy;
 
   /// No description provided for @g.
   ///

@@ -49,6 +49,7 @@ class AppDatabase {
   Future<SearchModel> getProduct({
     required String find,
     required String locale,
+
   }) async {
     final products = <ProductModel>[];
     final categories = <CategoryModel>[];
@@ -108,7 +109,7 @@ on f.id_source = s.id_source
 JOIN product as p 
 on p.id_product=f.id_product
 
-WHERE ${_getProductWhereQuery(listFind, locale)}
+WHERE ${_getProductWhereQuery(listFind, locale)} 
 
 
 ''';
@@ -140,12 +141,12 @@ unit_$locale as unit from nutrient''',
 
     var sourceName = '';
     var sourceAbbrev = '';
-    var sourceId = 0;
+    var sourceId = -1;
 
     var categoryName = '';
-    var categoryId = 0;
+    var categoryId = -1;
     var product = '';
-    var id = 0;
+    var id = -1;
 
     final dbProduct = await db.rawQuery(query);
 
@@ -156,12 +157,12 @@ unit_$locale as unit from nutrient''',
       // data for the main product parameters
       sourceName = row['sourceName'].toString();
       sourceAbbrev = row['sourceAbbrev'].toString();
-      sourceId = int.tryParse(row['sourceId'].toString()) ?? 0;
+      sourceId = int.parse(row['sourceId'].toString());
 
       categoryName = row['categoryName'].toString();
-      categoryId = int.tryParse(row['categoryId'].toString()) ?? 0;
+      categoryId = int.parse(row['categoryId'].toString());
       product = row['product'].toString();
-      id = int.tryParse(row['id'].toString()) ?? 0;
+      id = int.parse(row['id'].toString());
 
       // список всех категорий
       categories.add(CategoryModel(id: categoryId, name: categoryName));
@@ -197,6 +198,7 @@ unit_$locale as unit from nutrient''',
       products.add(
         ProductModel(
           category: categoryName,
+          idCategory: categoryId,
           product: product,
           source: SourceModel(
             abbrev: sourceAbbrev,
@@ -236,6 +238,7 @@ unit_$locale as unit from nutrient''',
         where = '$where AND ';
       }
     }
+
     return where;
   }
 }

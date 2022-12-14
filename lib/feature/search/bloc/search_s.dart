@@ -2,8 +2,6 @@
 // ignore_for_file: lines_longer_than_80_chars
 
 
-
-
 part of 'search_b.dart';
 
 enum SearchStatus { initial, loading, success, failure, empty }
@@ -24,8 +22,9 @@ class SearchState {
     this.statusSearch = SearchStatus.loading,
     this.statusValid = FormzStatus.pure,
     this.validSearch = const ValidSearch.pure(),
-    this.listProductsLength = 0,
-    this.listProducts = const [],
+    this.productsBase = const [],
+    this.productsFiltered = const [],
+    this.productsFileredLength = 0,
     this.lastEnterTexts = const [],
     this.categories = const [],
     this.isUpdateSelectedCategory = false,
@@ -42,8 +41,9 @@ class SearchState {
   final FormzStatus statusValid;
 
   final ValidSearch validSearch;
-  final int listProductsLength;
-  final List<ProductModel> listProducts;
+  final List<ProductModel> productsBase;
+  final List<ProductModel> productsFiltered;
+  final int productsFileredLength;
   final List<String> lastEnterTexts;
 
   final List<SelectedCategoryModel> categories;
@@ -56,8 +56,9 @@ class SearchState {
     SearchStatus? statusSearch,
     FormzStatus? statusValid,
     ValidSearch? validSearch,
-    int? listProductsLength,
-    List<ProductModel>? listProducts,
+    List<ProductModel>? productsBase,
+    List<ProductModel>? productsFiltered,
+    int? productsFileredLength,
     List<String>? lastEnterTexts,
     List<SelectedCategoryModel>? categories,
     bool? isUpdateSelectedCategory,
@@ -69,8 +70,9 @@ class SearchState {
       statusSearch: statusSearch ?? this.statusSearch,
       statusValid: statusValid ?? this.statusValid,
       validSearch: validSearch ?? this.validSearch,
-      listProductsLength: listProductsLength ?? this.listProductsLength,
-      listProducts: listProducts ?? this.listProducts,
+      productsBase: productsBase ?? this.productsBase,
+      productsFiltered: productsFiltered ?? this.productsFiltered,
+      productsFileredLength: productsFileredLength ?? this.productsFileredLength,
       lastEnterTexts: lastEnterTexts ?? this.lastEnterTexts,
       categories: categories ?? this.categories,
       isUpdateSelectedCategory: isUpdateSelectedCategory ?? this.isUpdateSelectedCategory,
@@ -80,7 +82,7 @@ class SearchState {
 
   @override
   String toString() {
-    return 'SearchState(isUpdateListProduct: $isUpdateListProduct, msgError: $msgError, statusSearch: $statusSearch, statusValid: $statusValid, validSearch: $validSearch, listProductsLength: $listProductsLength, listProducts: $listProducts, lastEnterTexts: $lastEnterTexts, categories: $categories, isUpdateSelectedCategory: $isUpdateSelectedCategory, isShowMenuSelectedCategory: $isShowMenuSelectedCategory)';
+    return 'SearchState(isUpdateListProduct: $isUpdateListProduct, msgError: $msgError, statusSearch: $statusSearch, statusValid: $statusValid, validSearch: $validSearch, productsBase: $productsBase, productsFiltered: $productsFiltered, productsFileredLength: $productsFileredLength, lastEnterTexts: $lastEnterTexts, categories: $categories, isUpdateSelectedCategory: $isUpdateSelectedCategory, isShowMenuSelectedCategory: $isShowMenuSelectedCategory)';
   }
 
   @override
@@ -93,8 +95,9 @@ class SearchState {
       other.statusSearch == statusSearch &&
       other.statusValid == statusValid &&
       other.validSearch == validSearch &&
-      other.listProductsLength == listProductsLength &&
-      listEquals(other.listProducts, listProducts) &&
+      listEquals(other.productsBase, productsBase) &&
+      listEquals(other.productsFiltered, productsFiltered) &&
+      other.productsFileredLength == productsFileredLength &&
       listEquals(other.lastEnterTexts, lastEnterTexts) &&
       listEquals(other.categories, categories) &&
       other.isUpdateSelectedCategory == isUpdateSelectedCategory &&
@@ -108,8 +111,9 @@ class SearchState {
       statusSearch.hashCode ^
       statusValid.hashCode ^
       validSearch.hashCode ^
-      listProductsLength.hashCode ^
-      listProducts.hashCode ^
+      productsBase.hashCode ^
+      productsFiltered.hashCode ^
+      productsFileredLength.hashCode ^
       lastEnterTexts.hashCode ^
       categories.hashCode ^
       isUpdateSelectedCategory.hashCode ^

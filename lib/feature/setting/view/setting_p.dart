@@ -40,10 +40,13 @@ class _SettingTabPage extends StatelessWidget {
 
     return SafeArea(
       child: Scaffold(
+        appBar: AppBar(title: Text(l.setting)),
         body: ListView(
-          padding: const EdgeInsets.all(20),
+          padding: const EdgeInsets.symmetric(horizontal: 8),
           children: [
-            Text(l.app_lang),
+            _Item(
+              title: l.app_lang,
+            ),
             BlocBuilder<SettingCubit, SettingState>(
               buildWhen: (p, c) => p.locale != c.locale,
               builder: (context, state) {
@@ -64,7 +67,10 @@ class _SettingTabPage extends StatelessWidget {
                 );
               },
             ),
-            Text(l.app_theme),
+   
+            _Item(
+              title: l.app_theme,
+            ),
             BlocBuilder<SettingCubit, SettingState>(
               buildWhen: (p, c) => p.theme != c.theme,
               builder: (context, state) {
@@ -87,23 +93,24 @@ class _SettingTabPage extends StatelessWidget {
                 );
               },
             ),
-            const _Item(
-              title: 'Персональные данные',
+const SizedBox(height: 20),
+               TextButton(
+              child: Text(l.rate_app),
+              onPressed: () => _onAboutAppPressed(context),
             ),
-            const Divider(),
-            const _Item(
-              title: 'Документы',
+               TextButton(
+              child: Text(l.feedback),
+              onPressed: () => _onAboutAppPressed(context),
             ),
-            const Divider(),
-            const _Item(
-              title: 'Пароль & Быстрый вход',
+            TextButton(
+              child: Text(l.about),
+              onPressed: () => _onAboutAppPressed(context),
             ),
-            const Divider(),
-            _Item(
-              title: 'О приложении',
-              onTap: () => _onAboutAppPressed(context),
+            const Spacer(),
+             TextButton(
+              child: Text(l.privacy_policy),
+              onPressed: () => _onAboutAppPressed(context),
             ),
-            const Divider(),
           ],
         ),
       ),
@@ -112,12 +119,14 @@ class _SettingTabPage extends StatelessWidget {
 
   Future<void> _onAboutAppPressed(BuildContext context) async {
     final packageInfo = await PackageInfo.fromPlatform();
-
+    final l = context.l10n;
     showAboutDialog(
       applicationIcon: SvgPicture.asset(
         'assets/svg/logo.svg',
+        width: 60,
+        height: 60,
       ),
-      applicationName: 'NadoDeneg',
+      applicationName: l.app_name,
       context: context,
       applicationVersion: '${packageInfo.version} | ${packageInfo.buildNumber}',
     );
@@ -148,17 +157,15 @@ class _ChipThemeLang extends StatelessWidget {
 class _Item extends StatelessWidget {
   const _Item({
     required this.title,
-    this.onTap,
+  
   });
   final String title;
-  final void Function()? onTap;
+
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      onTap: onTap,
-      trailing: const Icon(Icons.navigate_next),
+  
       title: Text(title),
-      contentPadding: EdgeInsets.zero,
     );
   }
 }

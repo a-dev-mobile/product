@@ -1,5 +1,3 @@
-
-
 import 'package:device_preview/device_preview.dart';
 import 'package:feedback/feedback.dart';
 
@@ -9,6 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 // ignore: depend_on_referenced_packages
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:product/app/common_cubits/common_cubits.dart';
 import 'package:product/app/style/style.dart';
@@ -50,6 +49,19 @@ class _MobileApp extends StatelessWidget {
   Widget build(BuildContext context) {
     final go = context.read<AppRouter>();
     // print('-- ${context.read<LocaleCubit>().state}');
+/* 
+            builder: (context) => ScreenUtilInit(
+              designSize: const Size(320, 568),
+              minTextAdapt: true,
+              splitScreenMode: true,
+              builder: (BuildContext context, Widget? child) =>
+                  MaterialApp.router(
+                onGenerateTitle: (context) =>
+                    AppLocalizations.of(context).app_name,
+                themeMode: context.watch<ThemeCubit>().state,
+
+
+ */
 
     return BetterFeedback(
       child: BlocBuilder<DebugCubit, DebugState>(
@@ -57,44 +69,51 @@ class _MobileApp extends StatelessWidget {
         builder: (context, state) {
           return DevicePreview(
             enabled: state.isShowDevice,
-            builder: (context) => MaterialApp.router(
-              onGenerateTitle: (context) =>
-                  AppLocalizations.of(context).app_name,
-              themeMode: context.watch<ThemeCubit>().state,
-              theme: AppTheme.lightThemeData(),
-              darkTheme: AppTheme.darkThemeData(),
-              title: 'Product',
-              debugShowCheckedModeBanner: false,
-              localizationsDelegates: const [
-                AppLocalizations.delegate,
-                GlobalMaterialLocalizations.delegate,
-                GlobalWidgetsLocalizations.delegate,
-                GlobalCupertinoLocalizations.delegate,
-              ],
-              supportedLocales: AppLocalizations.supportedLocales,
-              locale: Locale(context.watch<LocaleCubit>().state.name),
-              routerDelegate: go.router.routerDelegate,
-              routeInformationParser: go.router.routeInformationParser,
-              routeInformationProvider: go.router.routeInformationProvider,
-              builder: (context, _) {
-                var child = _!;
-                final theme = Theme.of(context);
-                final isThemeDark = theme.brightness == Brightness.dark;
-                child = Toast(
-                  navigatorKey: go.router.routerDelegate.navigatorKey,
-                  child: child,
-                );
+            builder: (context) => ScreenUtilInit(
+              designSize: const Size(320, 568),
+              minTextAdapt: true,
+              splitScreenMode: true,
+              builder: (BuildContext context, Widget? child) {
+                return MaterialApp.router(
+                  onGenerateTitle: (context) =>
+                      AppLocalizations.of(context).app_name,
+                  themeMode: context.watch<ThemeCubit>().state,
+                  theme: AppTheme.lightThemeData(),
+                  darkTheme: AppTheme.darkThemeData(),
+                  title: 'Product',
+                  debugShowCheckedModeBanner: false,
+                  localizationsDelegates: const [
+                    AppLocalizations.delegate,
+                    GlobalMaterialLocalizations.delegate,
+                    GlobalWidgetsLocalizations.delegate,
+                    GlobalCupertinoLocalizations.delegate,
+                  ],
+                  supportedLocales: AppLocalizations.supportedLocales,
+                  locale: Locale(context.watch<LocaleCubit>().state.name),
+                  routerDelegate: go.router.routerDelegate,
+                  routeInformationParser: go.router.routeInformationParser,
+                  routeInformationProvider: go.router.routeInformationProvider,
+                  builder: (context, _) {
+                    var child = _!;
+                    final theme = Theme.of(context);
+                    final isThemeDark = theme.brightness == Brightness.dark;
+                    child = Toast(
+                      navigatorKey: go.router.routerDelegate.navigatorKey,
+                      child: child,
+                    );
 
-                // toast snackbar dialog
-                return FlashTheme(
-                  flashBarTheme: isThemeDark
-                      ? const FlashBarThemeData.dark()
-                      : const FlashBarThemeData.light(),
-                  flashDialogTheme: const FlashDialogThemeData(),
-                  child: Builder(
-                    builder: (context) =>
-                        DevicePreview.appBuilder(context, child),
-                  ),
+                    // toast snackbar dialog
+                    return FlashTheme(
+                      flashBarTheme: isThemeDark
+                          ? const FlashBarThemeData.dark()
+                          : const FlashBarThemeData.light(),
+                      flashDialogTheme: const FlashDialogThemeData(),
+                      child: Builder(
+                        builder: (context) =>
+                            DevicePreview.appBuilder(context, child),
+                      ),
+                    );
+                  },
                 );
               },
             ),

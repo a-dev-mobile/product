@@ -18,7 +18,6 @@ class SearchItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       elevation: 3,
-
       child: Padding(
         padding: const EdgeInsets.all(8),
         child: Column(
@@ -34,7 +33,7 @@ class SearchItem extends StatelessWidget {
               style: AppTextStyles.h6(),
             ),
             Text(
-              product.source.abbrev,
+              'Источник: ${product.source.name}',
               style: AppTextStyles.caption(),
             ),
             const SizedBox(height: 20),
@@ -58,17 +57,22 @@ class SearchItem extends StatelessWidget {
               ],
             ),
             Align(
-           
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   IconButton(
                     onPressed: onDecrement,
-                    icon: const Icon(Icons.remove_circle_outline),
+                    icon: const Icon(
+                      Icons.remove_circle_outline,
+                      size: 40,
+                    ),
                   ),
                   IconButton(
                     onPressed: onIncrement,
-                    icon: const Icon(Icons.add_circle_outline),
+                    icon: const Icon(
+                      Icons.add_circle_outline,
+                      size: 40,
+                    ),
                   ),
                 ],
               ),

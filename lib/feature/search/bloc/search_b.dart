@@ -38,12 +38,11 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
         super(const SearchState()) {
     on<SearchEventStarted>(_onStarted);
     on<SearchEventFind>(_onFind, transformer: restartable());
+    on<SearchEventFindSelectedCategory>(_onFindSelectedCategory);
     on<SearchEventClean>(_onClean);
 
     on<SearchEventDecrementWeight>(_onDecrementWeight);
     on<SearchEventIncrementWeight>(_onIncrementWeight);
-    on<SearchEventGoToCategories>(_onGoToCategories);
-    on<SearchEventChangeActiveCategory>(_onChangeActiveCategory);
   }
   static const int _incrDecrValue = 10;
   final AppDatabase _db;
@@ -82,7 +81,6 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
   void _statusError(Emitter<SearchState> emit, [String msg = '']) =>
       emit(state.copyWith(statusSearch: SearchStatus.empty, msgError: msg));
 
-  // ignore: long-method
   Future<void> _onFind(
     SearchEventFind event,
     Emitter<SearchState> emit,
@@ -94,19 +92,25 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
 
     if (!isValid) {
       await _checkLastSearch(emit);
+      _statusInit(emit);
 
       return;
     }
 
     // выдержка перед поиском для ввода текста поиска
-    await Future<void>.delayed(const Duration(milliseconds: 500));
+
+    await Future<void>.delayed(const Duration(milliseconds: 1000));
     // чтобы запросы пропускались если время не прошло
     // https://github.com/felangel/bloc/issues/3349#issuecomment-1128950124
     if (emit.isDone) return;
+
     final locale = _cubitLocale.state.name;
 
     try {
-      final result = await _db.getProduct(find: find, locale: locale);
+      final result = await _db.getProduct(
+        find: find,
+        locale: locale,
+      );
       final products = result.products;
       final categories = result.categories;
 
@@ -116,22 +120,20 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
       ];
       var isShowMenuSelectedCategory = false;
 
-      if (event.isSearchInAllCategories) {
-        for (final e in categories) {
-          selectedCategory.add(SelectedCategoryModel(name: e.name));
-        }
-        // если категорий меньше 2 убираем первый элемент - все категории
-        if (selectedCategory.length == 2) {
-          final _ = selectedCategory.removeAt(0);
-          isShowMenuSelectedCategory = false;
-        } else if (selectedCategory.length == 3) {
-          isShowMenuSelectedCategory = false;
-        } else {
-          isShowMenuSelectedCategory = true;
-        }
-        // сохраняю для страницы выбор категории
-        await _storage.setSelectedCategories(selectedCategory);
+      for (final e in categories) {
+        selectedCategory.add(SelectedCategoryModel(name: e.name, id: e.id));
       }
+      // если категорий меньше 2 убираем первый элемент - все категории
+      if (selectedCategory.length == 2) {
+        final _ = selectedCategory.removeAt(0);
+        isShowMenuSelectedCategory = false;
+      } else if (selectedCategory.length == 3) {
+        isShowMenuSelectedCategory = false;
+      } else {
+        isShowMenuSelectedCategory = true;
+      }
+      // сохраняю для страницы выбор категории
+      await _storage.setSelectedCategories(selectedCategory);
 
       if (products.isEmpty) {
         _statusEmpty(emit);
@@ -143,8 +145,9 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
           state.copyWith(
             isShowMenuSelectedCategory: isShowMenuSelectedCategory,
             categories: selectedCategory,
-            listProducts: products,
-            listProductsLength: products.length,
+            productsBase: products,
+            productsFiltered: products,
+            productsFileredLength: products.length,
           ),
         );
         _statusSuccess(emit);
@@ -158,7 +161,14 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
 
   FutureOr<void> _onClean(SearchEventClean event, Emitter<SearchState> emit) {
     _checkLastSearch(emit);
-       _statusInit(emit);
+    emit(
+      state.copyWith(
+        validSearch: const ValidSearch.pure(),
+        statusValid: FormzStatus.pure,
+        categories: [],
+      ),
+    );
+    _statusInit(emit);
   }
 
   bool _isValidAndCheck({
@@ -195,7 +205,7 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
     required int id,
     required bool isIncrement,
   }) {
-    final listProduct = state.listProducts;
+    final listProduct = state.productsFiltered;
 
     final currentIndex = listProduct.indexWhere((e) => e.id == id);
     final currentProduct = listProduct[currentIndex];
@@ -221,43 +231,18 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
     listProduct[currentIndex] =
         currentProduct.copyWith(weight: weight, nutrients: newListNutrients);
 
-    emit(state.copyWith(listProducts: listProduct, isUpdateListProduct: true));
+    emit(
+      state.copyWith(
+        productsFiltered: listProduct,
+        isUpdateListProduct: true,
+      ),
+    );
     emit(state.copyWith(isUpdateListProduct: false));
   }
 
-  Future<FutureOr<void>> _onGoToCategories(
-    SearchEventGoToCategories event,
-    Emitter<SearchState> emit,
-  ) async {
-    await _storage.setSelectedCategories(state.categories);
-
-    final context = event.context;
-
-    // ignore: use_build_context_synchronously
-    final activeCategory = await Navigator.push<String>(
-      context,
-      MaterialPageRoute(
-        builder: (context) => const CategoryPage(),
-      ),
-    );
-
-    if (activeCategory != null) {
-      final categories = _changeActiveCategory(activeCategory);
-
-      emit(
-        state.copyWith(
-          categories: categories,
-          isUpdateSelectedCategory: true,
-        ),
-      );
-      emit(state.copyWith(isUpdateSelectedCategory: false));
-    }
-  }
-
-  List<SelectedCategoryModel> _changeActiveCategory(String activeCategory) {
+  List<SelectedCategoryModel> _changeActiveCategory(int activeCategory) {
     final categories = state.categories;
-    final newActiveindex =
-        categories.indexWhere((i) => i.name == activeCategory);
+    final newActiveindex = categories.indexWhere((i) => i.id == activeCategory);
 
     final oldActiveIndex = categories.indexWhere((i) => i.isActive);
 
@@ -267,21 +252,47 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
 
     categories[newActiveindex] =
         categories[newActiveindex].copyWith(isActive: true);
+
     return categories;
   }
 
-  FutureOr<void> _onChangeActiveCategory(
-    SearchEventChangeActiveCategory event,
+  Future<FutureOr<void>> _onFindSelectedCategory(
+    SearchEventFindSelectedCategory event,
     Emitter<SearchState> emit,
-  ) {
-    final categories = _changeActiveCategory(event.activeCategory);
+  ) async {
+    final context = event.context;
+
+    var categoriesNew = <SelectedCategoryModel>[];
+    int? idCategory;
+
+    if (event.isOpenPageCategories) {
+      await _storage.setSelectedCategories(state.categories);
+      // ignore: use_build_context_synchronously
+      idCategory = await Navigator.push<int>(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const CategoryPage(),
+        ),
+      );
+    }
+
+    // if id category is null, use from event
+    final categoryActual = idCategory ?? event.idCategory;
+
+    categoriesNew = _changeActiveCategory(categoryActual);
+
+    // product selection always from a base database
+    var products = state.productsBase;
+    if (!categoryActual.isNegative) {
+      products = products.where((e) => e.idCategory == categoryActual).toList();
+    }
 
     emit(
       state.copyWith(
-        categories: categories,
-        isUpdateSelectedCategory: true,
+        categories: categoriesNew,
+        productsFiltered: products,
+        productsFileredLength: products.length,
       ),
     );
-    emit(state.copyWith(isUpdateSelectedCategory: false));
   }
 }
