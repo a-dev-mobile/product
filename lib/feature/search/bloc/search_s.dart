@@ -2,6 +2,7 @@
 // ignore_for_file: lines_longer_than_80_chars
 
 
+
 part of 'search_b.dart';
 
 enum SearchStatus { initial, loading, success, failure, empty }
@@ -25,9 +26,9 @@ class SearchState {
     this.productsBase = const [],
     this.productsFiltered = const [],
     this.productsFileredLength = 0,
+    this.productsFileredPosition = 1,
     this.lastEnterTexts = const [],
     this.categories = const [],
-    this.isUpdateSelectedCategory = false,
     this.isShowMenuSelectedCategory = false,
   });
 
@@ -44,10 +45,11 @@ class SearchState {
   final List<ProductModel> productsBase;
   final List<ProductModel> productsFiltered;
   final int productsFileredLength;
+  final int productsFileredPosition;
   final List<String> lastEnterTexts;
 
   final List<SelectedCategoryModel> categories;
-  final bool isUpdateSelectedCategory;
+
   final bool isShowMenuSelectedCategory;
 
   SearchState copyWith({
@@ -59,9 +61,9 @@ class SearchState {
     List<ProductModel>? productsBase,
     List<ProductModel>? productsFiltered,
     int? productsFileredLength,
+    int? productsFileredPosition,
     List<String>? lastEnterTexts,
     List<SelectedCategoryModel>? categories,
-    bool? isUpdateSelectedCategory,
     bool? isShowMenuSelectedCategory,
   }) {
     return SearchState(
@@ -73,16 +75,16 @@ class SearchState {
       productsBase: productsBase ?? this.productsBase,
       productsFiltered: productsFiltered ?? this.productsFiltered,
       productsFileredLength: productsFileredLength ?? this.productsFileredLength,
+      productsFileredPosition: productsFileredPosition ?? this.productsFileredPosition,
       lastEnterTexts: lastEnterTexts ?? this.lastEnterTexts,
       categories: categories ?? this.categories,
-      isUpdateSelectedCategory: isUpdateSelectedCategory ?? this.isUpdateSelectedCategory,
       isShowMenuSelectedCategory: isShowMenuSelectedCategory ?? this.isShowMenuSelectedCategory,
     );
   }
 
   @override
   String toString() {
-    return 'SearchState(isUpdateListProduct: $isUpdateListProduct, msgError: $msgError, statusSearch: $statusSearch, statusValid: $statusValid, validSearch: $validSearch, productsBase: $productsBase, productsFiltered: $productsFiltered, productsFileredLength: $productsFileredLength, lastEnterTexts: $lastEnterTexts, categories: $categories, isUpdateSelectedCategory: $isUpdateSelectedCategory, isShowMenuSelectedCategory: $isShowMenuSelectedCategory)';
+    return 'SearchState(isUpdateListProduct: $isUpdateListProduct, msgError: $msgError, statusSearch: $statusSearch, statusValid: $statusValid, validSearch: $validSearch, productsBase: $productsBase, productsFiltered: $productsFiltered, productsFileredLength: $productsFileredLength, productsFileredPosition: $productsFileredPosition, lastEnterTexts: $lastEnterTexts, categories: $categories, isShowMenuSelectedCategory: $isShowMenuSelectedCategory)';
   }
 
   @override
@@ -98,9 +100,9 @@ class SearchState {
       listEquals(other.productsBase, productsBase) &&
       listEquals(other.productsFiltered, productsFiltered) &&
       other.productsFileredLength == productsFileredLength &&
+      other.productsFileredPosition == productsFileredPosition &&
       listEquals(other.lastEnterTexts, lastEnterTexts) &&
       listEquals(other.categories, categories) &&
-      other.isUpdateSelectedCategory == isUpdateSelectedCategory &&
       other.isShowMenuSelectedCategory == isShowMenuSelectedCategory;
   }
 
@@ -114,9 +116,9 @@ class SearchState {
       productsBase.hashCode ^
       productsFiltered.hashCode ^
       productsFileredLength.hashCode ^
+      productsFileredPosition.hashCode ^
       lastEnterTexts.hashCode ^
       categories.hashCode ^
-      isUpdateSelectedCategory.hashCode ^
       isShowMenuSelectedCategory.hashCode;
   }
 }

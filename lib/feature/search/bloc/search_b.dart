@@ -16,14 +16,13 @@ import 'package:product/core/utils/utils.dart';
 
 import 'package:product/data_base/data_base.dart';
 import 'package:product/feature/category/view/category_p.dart';
+import 'package:product/feature/common/enum.dart';
 import 'package:product/feature/search/search.dart';
 import 'package:product/l10n/l10n.dart';
 import 'package:product/navigation/navigation.dart';
 
 part 'search_e.dart';
 part 'search_s.dart';
-
-// ignore: constant_identifier_names
 
 class SearchBloc extends Bloc<SearchEvent, SearchState> {
   SearchBloc({
@@ -43,6 +42,8 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
 
     on<SearchEventDecrementWeight>(_onDecrementWeight);
     on<SearchEventIncrementWeight>(_onIncrementWeight);
+    on<SearchEventProductsFileredPosition>(_onProductsFileredPosition);
+    on<SearchEventUpdateUnfocusWeight>(_onUpdateUnfocusWeight);
   }
   static const int _incrDecrValue = 10;
   final AppDatabase _db;
@@ -126,6 +127,10 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
       // если категорий меньше 2 убираем первый элемент - все категории
       if (selectedCategory.length == 2) {
         final _ = selectedCategory.removeAt(0);
+        // если у нас 1 категория, то делаю ее активной
+        selectedCategory.first =
+            selectedCategory.first.copyWith(isActive: true);
+
         isShowMenuSelectedCategory = false;
       } else if (selectedCategory.length == 3) {
         isShowMenuSelectedCategory = false;
@@ -190,40 +195,61 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
     SearchEventDecrementWeight event,
     Emitter<SearchState> emit,
   ) {
-    _calculateWeight(emit, isIncrement: false, id: event.id);
+    _calculateWeight(
+      emit: emit,
+      typeCalculate: WeightCalculationType.decrement,
+      id: event.id,
+    );
   }
 
   FutureOr<void> _onIncrementWeight(
     SearchEventIncrementWeight event,
     Emitter<SearchState> emit,
   ) {
-    _calculateWeight(emit, isIncrement: true, id: event.id);
+    _calculateWeight(
+      emit: emit,
+      typeCalculate: WeightCalculationType.increment,
+      id: event.id,
+    );
   }
 
-  void _calculateWeight(
-    Emitter<SearchState> emit, {
+  void _calculateWeight({
+    required Emitter<SearchState> emit,
     required int id,
-    required bool isIncrement,
+    int customWeight = 0,
+    required WeightCalculationType typeCalculate,
   }) {
     final listProduct = state.productsFiltered;
 
     final currentIndex = listProduct.indexWhere((e) => e.id == id);
     final currentProduct = listProduct[currentIndex];
 
-    var weight = isIncrement
-        ? currentProduct.weight + _incrDecrValue
-        : currentProduct.weight - _incrDecrValue;
+    var weight = 0;
+
+    typeCalculate.map(
+      increment: () {
+        weight = currentProduct.weight + _incrDecrValue;
+      },
+      decrement: () {
+        weight = currentProduct.weight - _incrDecrValue;
+      },
+      custom: () {
+        weight = customWeight;
+      },
+    );
+
     if (weight < 0) weight = 0;
 
     final newListNutrients = <NutrientModel>[];
     //
+    // ignore: omit_local_variable_types
+    double result = 0;
+    
     for (final i in currentProduct.nutrients) {
+      result = double.parse(i.valueBase) * weight / 100;
       newListNutrients.add(
         i.copyWith(
-          value: AppUtilsNumber.getFormatNumber(
-            double.parse(i.valueBase) * weight / 100,
-            2,
-          ),
+          value: MyNumberFormat.nutrient(result),
         ),
       );
     }
@@ -292,7 +318,29 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
         categories: categoriesNew,
         productsFiltered: products,
         productsFileredLength: products.length,
+        productsFileredPosition: 1,
       ),
+    );
+  }
+
+  FutureOr<void> _onProductsFileredPosition(
+    SearchEventProductsFileredPosition event,
+    Emitter<SearchState> emit,
+  ) {
+    final index = event.index;
+
+    emit(state.copyWith(productsFileredPosition: index));
+  }
+
+  FutureOr<void> _onUpdateUnfocusWeight(
+    SearchEventUpdateUnfocusWeight event,
+    Emitter<SearchState> emit,
+  ) {
+    _calculateWeight(
+      emit: emit,
+      typeCalculate: WeightCalculationType.custom,
+      id: event.id,
+      customWeight: event.weight,
     );
   }
 }

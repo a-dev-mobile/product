@@ -303,6 +303,18 @@ abstract class AppLocalizations {
   /// **'Политика конфиденциальности'**
   String get privacy_policy;
 
+  /// No description provided for @data_source.
+  ///
+  /// In ru, this message translates to:
+  /// **'Источник'**
+  String get data_source;
+
+  /// No description provided for @weight.
+  ///
+  /// In ru, this message translates to:
+  /// **'Порция'**
+  String get weight;
+
   /// No description provided for @g.
   ///
   /// In ru, this message translates to:

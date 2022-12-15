@@ -170,6 +170,91 @@ enum NutrientName {
 }
 
 /// {@template enum}
+/// WeightCalculationType enumeration
+/// {@endtemplate}
+enum WeightCalculationType with Comparable<WeightCalculationType> {
+  /// increment weight
+  increment('increment'),
+
+  /// decrement weight
+  decrement('decrement'),
+
+  /// custom
+  custom('custom');
+
+  /// {@macro enum}
+  const WeightCalculationType(this.value);
+
+  /// Creates a new instance of [WeightCalculationType] from a given string.
+  static WeightCalculationType fromValue(
+    String? value, {
+    WeightCalculationType? fallback,
+  }) {
+    switch (value) {
+      case 'increment':
+        return increment;
+      case 'decrement':
+        return decrement;
+      case 'custom':
+        return custom;
+      default:
+        return fallback ?? (throw ArgumentError.value(value));
+    }
+  }
+
+  /// Value of the enum
+  final String value;
+
+  /// Pattern matching
+  T map<T>({
+    required T Function() increment,
+    required T Function() decrement,
+    required T Function() custom,
+  }) {
+    switch (this) {
+      case WeightCalculationType.increment:
+        return increment();
+      case WeightCalculationType.decrement:
+        return decrement();
+      case WeightCalculationType.custom:
+        return custom();
+    }
+  }
+
+  /// Pattern matching
+  T maybeMap<T>({
+    required T Function() orElse,
+    T Function()? increment,
+    T Function()? decrement,
+    T Function()? custom,
+  }) =>
+      map<T>(
+        increment: increment ?? orElse,
+        decrement: decrement ?? orElse,
+        custom: custom ?? orElse,
+      );
+
+  /// Pattern matching
+  T? maybeMapOrNull<T>({
+    T Function()? increment,
+    T Function()? decrement,
+    T Function()? custom,
+  }) =>
+      maybeMap<T?>(
+        orElse: () => null,
+        increment: increment,
+        decrement: decrement,
+        custom: custom,
+      );
+
+  @override
+  int compareTo(WeightCalculationType other) => index.compareTo(other.index);
+
+  @override
+  String toString() => value;
+}
+
+/// {@template enum}
 /// Locale enumeration
 /// {@endtemplate}
 enum Locale with Comparable<Locale> {

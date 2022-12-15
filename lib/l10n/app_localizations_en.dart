@@ -110,5 +110,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get privacy_policy => 'Политика конфиденциальности';
 
   @override
+  String get data_source => 'Источник';
+
+  @override
+  String get weight => 'Порция';
+
+  @override
   String get g => 'g';
 }

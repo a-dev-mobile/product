@@ -49,7 +49,6 @@ class AppDatabase {
   Future<SearchModel> getProduct({
     required String find,
     required String locale,
-
   }) async {
     final products = <ProductModel>[];
     final categories = <CategoryModel>[];
@@ -178,8 +177,7 @@ unit_$locale as unit from nutrient''',
           final findNutrient =
               listAllNutrient.firstWhere((e) => e.nutrient == nutrientItemEnum);
 
-          final valueFormat =
-              AppUtilsNumber.getFormatNumber(double.parse(value), 2);
+          final valueFormat = MyNumberFormat.nutrient(double.parse(value));
 
           //  filling out a new
           nutrients.add(

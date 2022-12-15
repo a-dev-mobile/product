@@ -67,7 +67,6 @@ class _SettingTabPage extends StatelessWidget {
                 );
               },
             ),
-   
             _Item(
               title: l.app_theme,
             ),
@@ -93,12 +92,12 @@ class _SettingTabPage extends StatelessWidget {
                 );
               },
             ),
-const SizedBox(height: 20),
-               TextButton(
+            const SizedBox(height: 20),
+            TextButton(
               child: Text(l.rate_app),
               onPressed: () => _onAboutAppPressed(context),
             ),
-               TextButton(
+            TextButton(
               child: Text(l.feedback),
               onPressed: () => _onAboutAppPressed(context),
             ),
@@ -106,8 +105,8 @@ const SizedBox(height: 20),
               child: Text(l.about),
               onPressed: () => _onAboutAppPressed(context),
             ),
-            const Spacer(),
-             TextButton(
+        
+            TextButton(
               child: Text(l.privacy_policy),
               onPressed: () => _onAboutAppPressed(context),
             ),
@@ -157,14 +156,12 @@ class _ChipThemeLang extends StatelessWidget {
 class _Item extends StatelessWidget {
   const _Item({
     required this.title,
-  
   });
   final String title;
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
-  
       title: Text(title),
     );
   }

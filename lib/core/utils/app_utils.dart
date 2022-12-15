@@ -39,7 +39,10 @@ abstract class AppUtilsString {
 }
 
 class AppUtilsNumber {
-  static String getFormatNumber(double num, int numberDigitsAfterPoint) {
+  static String getFormatNumber({
+    required double num,
+    int numberDigitsAfterPoint = 2,
+  }) {
 // округляем, но нет удаления конечных нулей
     final num2 = num.toStringAsFixed(numberDigitsAfterPoint);
     // если нет точки возвращаем
@@ -68,4 +71,8 @@ class AppUtilsNumber {
 
     return mainResult;
   }
+
+
+
+
 }

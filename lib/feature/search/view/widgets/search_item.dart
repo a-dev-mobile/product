@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:product/app/style/style.dart';
 import 'package:product/data_base/models/models.dart';
+import 'package:product/feature/search/search.dart';
 import 'package:product/l10n/l10n.dart';
 
 class SearchItem extends StatelessWidget {
@@ -16,6 +17,8 @@ class SearchItem extends StatelessWidget {
   final void Function()? onDecrement;
   @override
   Widget build(BuildContext context) {
+    final l = context.l10n;
+
     return Card(
       elevation: 3,
       child: Padding(
@@ -33,7 +36,7 @@ class SearchItem extends StatelessWidget {
               style: AppTextStyles.h6(),
             ),
             Text(
-              'Источник: ${product.source.name}',
+              '${l.data_source}: ${product.source.name}',
               style: AppTextStyles.caption(),
             ),
             const SizedBox(height: 20),
@@ -44,7 +47,10 @@ class SearchItem extends StatelessWidget {
                 Expanded(
                   child: Column(
                     children: [
-                      _WeightRow(weight: product.weight),
+                      _WeightRow(
+                        weight: product.weight,
+                        idProduct: product.id,
+                      ),
                       const Divider(),
                       for (var item in product.nutrients)
                         _NutrientElement(
@@ -87,25 +93,30 @@ class SearchItem extends StatelessWidget {
 class _WeightRow extends StatelessWidget {
   const _WeightRow({
     required this.weight,
+    required this.idProduct,
   });
 
   final int weight;
+  final int idProduct;
 
   @override
   Widget build(BuildContext context) {
     final l = context.l10n;
 
     return Row(
+      
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text(
-          'Порция',
+          l.weight,
           style: AppTextStyles.bodyText1(),
         ),
-        Text(
-          '$weight ${l.g}',
-          style: AppTextStyles.h5(),
+        WeightField(
+          weight: weight,
+          idProduct: idProduct,
         ),
+
+     
       ],
     );
   }

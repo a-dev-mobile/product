@@ -35,7 +35,7 @@ dependencies:
 
   # helper for UI
   flash: ^2.0.5
-  lottie: ^2.0.0
+  lottie: ^2.1.0
   # google_fonts: ^3.0.1
   flutter_native_splash: ^2.2.16
 
@@ -69,13 +69,15 @@ dependencies:
 
   #   for navigation
   go_router: ^5.2.4
+  #   for position
+  rect_getter: ^1.1.0
   
   # for models
   freezed_annotation: ^2.2.0
   json_annotation: ^4.7.0
   json_serializable: ^6.5.4
 
-  # sprintf: ^7.0.0
+
 
  # firebase
   firebase_core: ^2.4.0
@@ -83,7 +85,7 @@ dependencies:
   firebase_remote_config: ^3.0.7
   firebase_messaging: ^14.1.4
   cloud_firestore: ^4.2.0
-  firebase_storage: ^11.0.7
+  firebase_storage: ^11.0.8
   firebase_in_app_messaging: ^0.7.0+8
   # cloud_functions: ^4.0.5
   firebase_analytics: ^10.0.7
@@ -107,7 +109,7 @@ dependencies:
 
 
   cupertino_icons: ^1.0.5
-  sqflite_sqlcipher: ^2.1.1+1
+  sqflite_sqlcipher: ^2.1.1
   google_fonts: ^3.0.1
 
 dev_dependencies:

@@ -14,9 +14,17 @@ class SearchEventClean extends SearchEvent {
   const SearchEventClean();
 }
 
-
 class SearchEventIncrementWeight extends SearchEvent {
   const SearchEventIncrementWeight({required this.id});
+  final int id;
+}
+
+class SearchEventUpdateUnfocusWeight extends SearchEvent {
+  const SearchEventUpdateUnfocusWeight({
+    required this.weight,
+    required this.id,
+  });
+  final int weight;
   final int id;
 }
 
@@ -40,6 +48,20 @@ class SearchEventFind extends SearchEvent {
 
   @override
   List<Object> get props => [find, l];
+}
+
+class SearchEventProductsFileredPosition extends SearchEvent {
+  const SearchEventProductsFileredPosition({
+    required this.index,
+  });
+
+  final int index;
+
+  @override
+  bool get stringify => true;
+
+  @override
+  List<Object> get props => [index];
 }
 
 class SearchEventFindSelectedCategory extends SearchEvent {

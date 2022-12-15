@@ -80,11 +80,14 @@ class LocalStorage {
     return getStringList(key: _lastSearchList);
   }
 
-  Future<void> setLastSearch(String value) async {
+  Future<void> setLastSearch(String v) async {
+    final value = v.trim();
     final list = await getStringList(key: _lastSearchList);
 
     final growableList = List<String>.empty(growable: true)..addAll(list);
-    if (growableList.contains(value)) growableList.remove(value);
+
+    if (growableList.contains(value)) final _ = growableList.remove(value);
+    
     growableList.add(value);
 
     await setStringList(key: _lastSearchList, value: growableList);

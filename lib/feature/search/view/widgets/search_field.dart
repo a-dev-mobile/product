@@ -31,9 +31,29 @@ class SearchField extends StatelessWidget {
           onChanged: (v) => bloc.add(SearchEventFind(find: v, l: l)),
           keyboardType: TextInputType.name,
           decoration: InputDecoration(
-            suffixIcon: IconButton(
-              icon: const Icon(Icons.clear),
-              onPressed: () => _tapClean(controller, bloc),
+            suffixIcon: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                BlocBuilder<SearchBloc, SearchState>(
+                  buildWhen: (p, c) =>
+                      p.productsFileredPosition != c.productsFileredPosition ||
+                      p.productsFileredLength != c.productsFileredLength ||
+                      p.statusSearch != c.statusSearch,
+                  builder: (context, state) {
+                    return Visibility(
+                      visible: state.productsFileredLength > 0 &&
+                          state.statusSearch.isSuccess,
+                      child: Text(
+                        '${state.productsFileredPosition}/${state.productsFileredLength}',
+                      ),
+                    );
+                  },
+                ),
+                IconButton(
+                  icon: const Icon(Icons.clear),
+                  onPressed: () => _tapClean(controller, bloc),
+                ),
+              ],
             ),
             hintText: 'Найти продукт',
             focusedBorder: InputBorder.none,
@@ -44,13 +64,13 @@ class SearchField extends StatelessWidget {
             focusedErrorBorder: InputBorder.none,
             errorText: valid.pure
                 ? null
-                 : valid.error == valid.isEmpty
+                : valid.error == valid.isEmpty
                     ? null
-                : valid.error == valid.leght1
-                    ? l.you_entered_1_3_characters
-                    : valid.error == valid.leght2
-                        ? l.you_entered_2_3_characters
-                        : null,
+                    : valid.error == valid.leght1
+                        ? l.you_entered_1_3_characters
+                        : valid.error == valid.leght2
+                            ? l.you_entered_2_3_characters
+                            : null,
           ),
         );
       },
