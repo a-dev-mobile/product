@@ -6,16 +6,16 @@ import 'package:product/data_base/data_base.dart';
 
 @immutable
 class SearchModel {
-  final List<ProductModel> products;
-  final List<CategoryModel> categories;
+  final List<ProductDbModel> products;
+  final List<CategoryDbModel> categories;
   const SearchModel({
     this.products = const [],
     this.categories = const [],
   });
 
   SearchModel copyWith({
-    List<ProductModel>? products,
-    List<CategoryModel>? categories,
+    List<ProductDbModel>? products,
+    List<CategoryDbModel>? categories,
   }) {
     return SearchModel(
       products: products ?? this.products,

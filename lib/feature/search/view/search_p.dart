@@ -1,5 +1,7 @@
 // ignore_for_file: lines_longer_than_80_chars
 
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:product/app/style/style.dart';
@@ -47,19 +49,19 @@ class _SearchView extends StatelessWidget {
 
     return ClearFocus(
       child: Scaffold(
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-        floatingActionButton: BlocBuilder<SearchBloc, SearchState>(
-          buildWhen: (p, c) => p.categories.length != c.categories.length,
-          builder: (context, state) {
-            return Visibility(
-              visible: state.categories.isNotEmpty,
-              child: FloatingActionButton(
-                onPressed: () {},
-                child: const Icon(Icons.swap_vert),
-              ),
-            );
-          },
-        ),
+        // floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+        // floatingActionButton: BlocBuilder<SearchBloc, SearchState>(
+        //   buildWhen: (p, c) => p.categories.length != c.categories.length,
+        //   builder: (context, state) {
+        //     return Visibility(
+        //       visible: state.categories.isNotEmpty,
+        //       child: FloatingActionButton(
+        //         onPressed: () {},
+        //         child: const Icon(Icons.swap_vert),
+        //       ),
+        //     );
+        //   },
+        // ),
         body: SafeArea(
           child: Column(
             mainAxisSize: MainAxisSize.min,
@@ -153,7 +155,7 @@ class _BuildListProductsState extends State<_BuildListProducts> {
     return Expanded(
       child: BlocConsumer<SearchBloc, SearchState>(
         buildWhen: (p, c) =>
-            p.isUpdateListProduct != c.isUpdateListProduct ||
+            p.forceUpdateState != c.forceUpdateState ||
             p.productsFileredLength != c.productsFileredLength,
 
         listenWhen: (p, c) =>
@@ -167,6 +169,8 @@ class _BuildListProductsState extends State<_BuildListProducts> {
         ),
 
         builder: (context, state) {
+          log('--update-list-product');
+
           final listView = RectGetter(
             key: listViewKey,
             child: ListView.builder(
@@ -183,16 +187,23 @@ class _BuildListProductsState extends State<_BuildListProducts> {
                     padding: const EdgeInsets.symmetric(
                       horizontal: 8,
                     ),
-                    child: SearchItem(
-                      product: product,
-                      onDecrement: () => bloc.add(
-                        SearchEventDecrementWeight(
-                          id: product.id,
+                    child: RepaintBoundary(
+                      child: SearchItem(
+                        product: product,
+                        onDecrement: () => bloc.add(
+                          SearchEventDecrementWeight(
+                            id: product.id,
+                          ),
                         ),
-                      ),
-                      onIncrement: () => bloc.add(
-                        SearchEventIncrementWeight(
-                          id: product.id,
+                        onIncrement: () => bloc.add(
+                          SearchEventIncrementWeight(
+                            id: product.id,
+                          ),
+                        ),
+                        onFavorit: () => bloc.add(
+                          SearchEventSetFavorite(
+                            idProduct: product.id,
+                          ),
                         ),
                       ),
                     ),
@@ -231,9 +242,7 @@ class _BuildListProductsState extends State<_BuildListProducts> {
 
               positionOld = bloc.state.productsFileredPosition;
 
-              // if (positionNew <= 0) positionNew = 1;
-
-              if (positionNew != positionOld) {
+              if (positionNew != positionOld && positionNew != 0) {
                 bloc.add(
                   SearchEventProductsFileredPosition(index: positionNew),
                 );

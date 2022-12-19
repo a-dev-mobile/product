@@ -4,14 +4,14 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 
 @immutable
-class NutrientModel {
+class NutrientDbModel {
   final String name;
   final String value;
   final String valueBase;
   final String unit;
   final int idType;
   final String nutrient;
-  const NutrientModel({
+  const NutrientDbModel({
     required this.name,
     required this.value,
     required this.valueBase,
@@ -20,7 +20,7 @@ class NutrientModel {
     required this.nutrient,
   });
 
-  NutrientModel copyWith({
+  NutrientDbModel copyWith({
     String? name,
     String? value,
     String? valueBase,
@@ -28,7 +28,7 @@ class NutrientModel {
     int? idType,
     String? nutrient,
   }) {
-    return NutrientModel(
+    return NutrientDbModel(
       name: name ?? this.name,
       value: value ?? this.value,
       valueBase: valueBase ?? this.valueBase,
@@ -49,8 +49,8 @@ class NutrientModel {
     };
   }
 
-  factory NutrientModel.fromMap(Map<String, dynamic> map) {
-    return NutrientModel(
+  factory NutrientDbModel.fromMap(Map<String, dynamic> map) {
+    return NutrientDbModel(
       name: map['name'] as String,
       value: map['value'] as String,
       valueBase: map['valueBase'] as String,
@@ -62,8 +62,8 @@ class NutrientModel {
 
   String toJson() => json.encode(toMap());
 
-  factory NutrientModel.fromJson(String source) =>
-      NutrientModel.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory NutrientDbModel.fromJson(String source) =>
+      NutrientDbModel.fromMap(json.decode(source) as Map<String, dynamic>);
 
   @override
   String toString() {
@@ -71,7 +71,7 @@ class NutrientModel {
   }
 
   @override
-  bool operator ==(covariant NutrientModel other) {
+  bool operator ==(covariant NutrientDbModel other) {
     if (identical(this, other)) return true;
 
     return other.name == name &&

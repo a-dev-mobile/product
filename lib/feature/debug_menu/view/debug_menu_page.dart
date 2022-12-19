@@ -14,6 +14,7 @@ import 'package:product/app/style/style.dart';
 import 'package:product/core/storage/local_storage.dart';
 import 'package:product/feature/bottom_nav_bar/bottom_nav_bar.dart';
 import 'package:product/feature/common/test_app/test_app.dart';
+import 'package:product/feature/favorite/favorite.dart';
 import 'package:product/feature/onboarding/onboarding.dart';
 import 'package:product/feature/search/search.dart';
 import 'package:product/feature/setting/setting_tab.dart';
@@ -39,63 +40,77 @@ class DebugMenuPage extends StatelessWidget {
       ),
       body: Stack(
         children: [
-          ListView(
-            shrinkWrap: true,
-            children: [
-              const Center(child: Text('---Setting---')),
-              BlocBuilder<DebugCubit, DebugState>(
-                builder: (context, state) {
-                  return SwitchListTile(
+          BlocBuilder<DebugCubit, DebugState>(
+            builder: (context, state) {
+              return ListView(
+                shrinkWrap: true,
+                children: [
+                  const Center(child: Text('---Setting---')),
+                  SwitchListTile(
                     visualDensity: const VisualDensity(vertical: -3),
                     dense: true,
                     title: const Text('Show device preview'),
                     value: state.isShowDevice,
                     onChanged: cubitDebug.setDevicePreview,
-                  );
-                },
-              ),
-              BlocBuilder<DebugCubit, DebugState>(
-                builder: (context, state) {
-                  return SwitchListTile(
+                  ),
+                  SwitchListTile(
                     visualDensity: const VisualDensity(vertical: -3),
                     dense: true,
                     title: const Text('Show button http log'),
                     value: state.isShowBtnHttpLog,
                     onChanged: cubitDebug.setShowBtnHttpLog,
-                  );
-                },
-              ),
-              const Center(child: Text('---Начало---')),
-              Wrap(
-                children: const [
-                  _ItemPage(name: 'splash', route: SplashPage.name),
-                  _ItemPage(
-                    name: 'onboarding',
-                    route: OnBoardingPage.name,
                   ),
-                     _ItemPage(
-                    name: 'test app',
-                    route: TestAppPage.name,
+                  SwitchListTile(
+                    visualDensity: const VisualDensity(vertical: -3),
+                    dense: true,
+                    title: const Text('debugRepaintRainbowEnabled'),
+                    value: state.isShowRepaintRainbow,
+                    onChanged: cubitDebug.setShowDebugRepaintRainbow,
                   ),
-                  _ItemPage(
-                    name: 'search',
-                    route: SearchPage.name,
+                  SwitchListTile(
+                    visualDensity: const VisualDensity(vertical: -3),
+                    dense: true,
+                    title: const Text('debugPaintSizeEnabled'),
+                    value: state.isShowPaintSizeEnabled,
+                    onChanged: cubitDebug.setShowPaintSizeEnabled,
                   ),
-                  _ItemPage(
-                    name: 'setting',
-                    route: SettingPage.name,
+                  const Center(child: Text('---Начало---')),
+                  Wrap(
+                    children: const [
+                      _ItemPage(name: 'splash', route: SplashPage.name),
+                      _ItemPage(
+                        name: 'onboarding',
+                        route: OnBoardingPage.name,
+                      ),
+                      _ItemPage(
+                        name: 'test app',
+                        route: TestAppPage.name,
+                      ),
+                      _ItemPage(
+                        name: 'search',
+                        route: SearchPage.name,
+                      ),
+                      _ItemPage(
+                        name: 'favorite',
+                        route: FavoritePage.name,
+                      ),
+                      _ItemPage(
+                        name: 'setting',
+                        route: SettingPage.name,
+                      ),
+                      _ItemPage(
+                        name: 'dashboard',
+                        route: BottomNavBarPage.name,
+                      ),
+                    ],
                   ),
-                    _ItemPage(
-                    name: 'dashboard',
-                    route: BottomNavBarPage.name,
-                  ),
+                  const Center(child: Text('---Вход---')),
+                  const Center(child: Text('---Разное---')),
+                  const Center(child: Text('---Вспомогательные---')),
+                  const Center(child: Text('---Тестирование функционала---')),
                 ],
-              ),
-              const Center(child: Text('---Вход---')),
-              const Center(child: Text('---Разное---')),
-              const Center(child: Text('---Вспомогательные---')),
-              const Center(child: Text('---Тестирование функционала---')),
-            ],
+              );
+            },
           ),
           Align(
             alignment: Alignment.bottomCenter,

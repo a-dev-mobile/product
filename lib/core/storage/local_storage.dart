@@ -62,14 +62,14 @@ class LocalStorage {
   }
 
 // ******************************
-  static const _db_name = '_db_name';
+  static const _db_version = '_db_version';
 
-  Future<String> getDbName() {
-    return getString(key: _db_name);
+  Future<int> getDbVersion() {
+    return getInt(key: _db_version);
   }
 
-  Future<void> setDbName(String value) {
-    return setString(key: _db_name, value: value);
+  Future<void> setVersionDb(int value) {
+    return setInt(key: _db_version, value: value);
   }
 
 // ******************************
@@ -87,28 +87,64 @@ class LocalStorage {
     final growableList = List<String>.empty(growable: true)..addAll(list);
 
     if (growableList.contains(value)) final _ = growableList.remove(value);
-    
+
     growableList.add(value);
 
     await setStringList(key: _lastSearchList, value: growableList);
+  }
+// ******************************
+
+  static const _favoriteList = '_favoriteList';
+
+  Future<List<FavoriteCacheModel>> getFavorite() async {
+    final listRaw = await getStringList(key: _favoriteList);
+
+    final list = <FavoriteCacheModel>[];
+    for (final i in listRaw) {
+      list.add(FavoriteCacheModel.fromJson(i));
+    }
+
+    return list;
+  }
+
+  Future<void> addFavorite(FavoriteCacheModel value) async {
+    final list = await getFavorite();
+
+    //  -1 if [element] is not found.
+    final foundIndex = list.indexWhere(
+      (i) => i.idProduct == value.idProduct,
+    );
+    // если такой продукт есть
+    if (!foundIndex.isNegative) {
+      final _ = list.removeAt(foundIndex);
+    }
+    // добавляем только активные
+    if (value.isFavorite) list.add(value);
+
+    final listString = <String>[];
+
+    for (final i in list) {
+      listString.add(i.toJson());
+    }
+    await setStringList(key: _favoriteList, value: listString);
   }
 
 // ******************************
 
   static const _categories = 'categories';
 
-  Future<List<SelectedCategoryModel>> getSelectedCategories() async {
+  Future<List<CategoryModel>> getSelectedCategories() async {
     final listRaw = await getStringList(key: _categories);
 
-    final list = <SelectedCategoryModel>[];
+    final list = <CategoryModel>[];
     for (final i in listRaw) {
-      list.add(SelectedCategoryModel.fromJson(i));
+      list.add(CategoryModel.fromJson(i));
     }
 
     return list;
   }
 
-  Future<void> setSelectedCategories(List<SelectedCategoryModel> value) {
+  Future<void> setSelectedCategories(List<CategoryModel> value) {
     final listString = <String>[];
     for (final i in value) {
       listString.add(i.toJson());

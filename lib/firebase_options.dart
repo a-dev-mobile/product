@@ -49,6 +49,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '369496255108',
     projectId: 'product-13769',
     authDomain: 'product-13769.firebaseapp.com',
+    databaseURL: 'https://product-13769-default-rtdb.europe-west1.firebasedatabase.app',
     storageBucket: 'product-13769.appspot.com',
     measurementId: 'G-WYPF058V2E',
   );
@@ -58,6 +59,7 @@ class DefaultFirebaseOptions {
     appId: '1:369496255108:android:8ee0fcaf5064fce4c5b0d1',
     messagingSenderId: '369496255108',
     projectId: 'product-13769',
+    databaseURL: 'https://product-13769-default-rtdb.europe-west1.firebasedatabase.app',
     storageBucket: 'product-13769.appspot.com',
   );
 
@@ -66,6 +68,7 @@ class DefaultFirebaseOptions {
     appId: '1:369496255108:ios:ed3804e74b42c25cc5b0d1',
     messagingSenderId: '369496255108',
     projectId: 'product-13769',
+    databaseURL: 'https://product-13769-default-rtdb.europe-west1.firebasedatabase.app',
     storageBucket: 'product-13769.appspot.com',
     iosClientId: '369496255108-mb9e9paf7sg9ah1nkd0mq15olhokm02l.apps.googleusercontent.com',
     iosBundleId: 'a.dev.mobile.product',
@@ -76,6 +79,7 @@ class DefaultFirebaseOptions {
     appId: '1:369496255108:ios:ed3804e74b42c25cc5b0d1',
     messagingSenderId: '369496255108',
     projectId: 'product-13769',
+    databaseURL: 'https://product-13769-default-rtdb.europe-west1.firebasedatabase.app',
     storageBucket: 'product-13769.appspot.com',
     iosClientId: '369496255108-mb9e9paf7sg9ah1nkd0mq15olhokm02l.apps.googleusercontent.com',
     iosBundleId: 'a.dev.mobile.product',

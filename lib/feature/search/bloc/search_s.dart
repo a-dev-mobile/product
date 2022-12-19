@@ -1,8 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 // ignore_for_file: lines_longer_than_80_chars
 
-
-
 part of 'search_b.dart';
 
 enum SearchStatus { initial, loading, success, failure, empty }
@@ -18,7 +16,7 @@ extension SearchStatusX on SearchStatus {
 @immutable
 class SearchState {
   const SearchState({
-    this.isUpdateListProduct = false,
+    this.forceUpdateState = 0,
     this.msgError = '',
     this.statusSearch = SearchStatus.loading,
     this.statusValid = FormzStatus.pure,
@@ -32,7 +30,7 @@ class SearchState {
     this.isShowMenuSelectedCategory = false,
   });
 
-  final bool isUpdateListProduct;
+  final double forceUpdateState;
 
   final String msgError;
 
@@ -42,83 +40,85 @@ class SearchState {
   final FormzStatus statusValid;
 
   final ValidSearch validSearch;
-  final List<ProductModel> productsBase;
-  final List<ProductModel> productsFiltered;
+  final List<ProductDbModel> productsBase;
+  final List<ProductDbModel> productsFiltered;
   final int productsFileredLength;
   final int productsFileredPosition;
   final List<String> lastEnterTexts;
 
-  final List<SelectedCategoryModel> categories;
+  final List<CategoryModel> categories;
 
   final bool isShowMenuSelectedCategory;
 
   SearchState copyWith({
-    bool? isUpdateListProduct,
+    double? forceUpdateState,
     String? msgError,
     SearchStatus? statusSearch,
     FormzStatus? statusValid,
     ValidSearch? validSearch,
-    List<ProductModel>? productsBase,
-    List<ProductModel>? productsFiltered,
+    List<ProductDbModel>? productsBase,
+    List<ProductDbModel>? productsFiltered,
     int? productsFileredLength,
     int? productsFileredPosition,
     List<String>? lastEnterTexts,
-    List<SelectedCategoryModel>? categories,
+    List<CategoryModel>? categories,
     bool? isShowMenuSelectedCategory,
   }) {
     return SearchState(
-      isUpdateListProduct: isUpdateListProduct ?? this.isUpdateListProduct,
+      forceUpdateState: forceUpdateState ?? this.forceUpdateState,
       msgError: msgError ?? this.msgError,
       statusSearch: statusSearch ?? this.statusSearch,
       statusValid: statusValid ?? this.statusValid,
       validSearch: validSearch ?? this.validSearch,
       productsBase: productsBase ?? this.productsBase,
       productsFiltered: productsFiltered ?? this.productsFiltered,
-      productsFileredLength: productsFileredLength ?? this.productsFileredLength,
-      productsFileredPosition: productsFileredPosition ?? this.productsFileredPosition,
+      productsFileredLength:
+          productsFileredLength ?? this.productsFileredLength,
+      productsFileredPosition:
+          productsFileredPosition ?? this.productsFileredPosition,
       lastEnterTexts: lastEnterTexts ?? this.lastEnterTexts,
       categories: categories ?? this.categories,
-      isShowMenuSelectedCategory: isShowMenuSelectedCategory ?? this.isShowMenuSelectedCategory,
+      isShowMenuSelectedCategory:
+          isShowMenuSelectedCategory ?? this.isShowMenuSelectedCategory,
     );
   }
 
   @override
   String toString() {
-    return 'SearchState(isUpdateListProduct: $isUpdateListProduct, msgError: $msgError, statusSearch: $statusSearch, statusValid: $statusValid, validSearch: $validSearch, productsBase: $productsBase, productsFiltered: $productsFiltered, productsFileredLength: $productsFileredLength, productsFileredPosition: $productsFileredPosition, lastEnterTexts: $lastEnterTexts, categories: $categories, isShowMenuSelectedCategory: $isShowMenuSelectedCategory)';
+    return 'SearchState(forceUpdateState: $forceUpdateState, msgError: $msgError, statusSearch: $statusSearch, statusValid: $statusValid, validSearch: $validSearch, productsBase: $productsBase, productsFiltered: $productsFiltered, productsFileredLength: $productsFileredLength, productsFileredPosition: $productsFileredPosition, lastEnterTexts: $lastEnterTexts, categories: $categories, isShowMenuSelectedCategory: $isShowMenuSelectedCategory)';
   }
 
   @override
   bool operator ==(covariant SearchState other) {
     if (identical(this, other)) return true;
-  
-    return 
-      other.isUpdateListProduct == isUpdateListProduct &&
-      other.msgError == msgError &&
-      other.statusSearch == statusSearch &&
-      other.statusValid == statusValid &&
-      other.validSearch == validSearch &&
-      listEquals(other.productsBase, productsBase) &&
-      listEquals(other.productsFiltered, productsFiltered) &&
-      other.productsFileredLength == productsFileredLength &&
-      other.productsFileredPosition == productsFileredPosition &&
-      listEquals(other.lastEnterTexts, lastEnterTexts) &&
-      listEquals(other.categories, categories) &&
-      other.isShowMenuSelectedCategory == isShowMenuSelectedCategory;
+
+    return other.forceUpdateState == forceUpdateState &&
+        other.msgError == msgError &&
+        other.statusSearch == statusSearch &&
+        other.statusValid == statusValid &&
+        other.validSearch == validSearch &&
+        listEquals(other.productsBase, productsBase) &&
+        listEquals(other.productsFiltered, productsFiltered) &&
+        other.productsFileredLength == productsFileredLength &&
+        other.productsFileredPosition == productsFileredPosition &&
+        listEquals(other.lastEnterTexts, lastEnterTexts) &&
+        listEquals(other.categories, categories) &&
+        other.isShowMenuSelectedCategory == isShowMenuSelectedCategory;
   }
 
   @override
   int get hashCode {
-    return isUpdateListProduct.hashCode ^
-      msgError.hashCode ^
-      statusSearch.hashCode ^
-      statusValid.hashCode ^
-      validSearch.hashCode ^
-      productsBase.hashCode ^
-      productsFiltered.hashCode ^
-      productsFileredLength.hashCode ^
-      productsFileredPosition.hashCode ^
-      lastEnterTexts.hashCode ^
-      categories.hashCode ^
-      isShowMenuSelectedCategory.hashCode;
+    return forceUpdateState.hashCode ^
+        msgError.hashCode ^
+        statusSearch.hashCode ^
+        statusValid.hashCode ^
+        validSearch.hashCode ^
+        productsBase.hashCode ^
+        productsFiltered.hashCode ^
+        productsFileredLength.hashCode ^
+        productsFileredPosition.hashCode ^
+        lastEnterTexts.hashCode ^
+        categories.hashCode ^
+        isShowMenuSelectedCategory.hashCode;
   }
 }

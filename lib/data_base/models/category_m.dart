@@ -4,21 +4,20 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 
 @immutable
-class CategoryModel {
+class CategoryDbModel {
   final String name;
   final int id;
 
-
-  const CategoryModel({
+  const CategoryDbModel({
     this.name = '',
     this.id = 0,
   });
 
-  CategoryModel copyWith({
+  CategoryDbModel copyWith({
     String? name,
     int? id,
   }) {
-    return CategoryModel(
+    return CategoryDbModel(
       name: name ?? this.name,
       id: id ?? this.id,
     );
@@ -31,8 +30,8 @@ class CategoryModel {
     };
   }
 
-  factory CategoryModel.fromMap(Map<String, dynamic> map) {
-    return CategoryModel(
+  factory CategoryDbModel.fromMap(Map<String, dynamic> map) {
+    return CategoryDbModel(
       name: map['name'] as String,
       id: map['id'] as int,
     );
@@ -40,19 +39,17 @@ class CategoryModel {
 
   String toJson() => json.encode(toMap());
 
-  factory CategoryModel.fromJson(String source) =>
-      CategoryModel.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory CategoryDbModel.fromJson(String source) =>
+      CategoryDbModel.fromMap(json.decode(source) as Map<String, dynamic>);
 
   @override
   String toString() => 'CategoryModel(name: $name, id: $id)';
 
   @override
-  bool operator ==(covariant CategoryModel other) {
+  bool operator ==(covariant CategoryDbModel other) {
     if (identical(this, other)) return true;
-  
-    return 
-      other.name == name &&
-      other.id == id;
+
+    return other.name == name && other.id == id;
   }
 
   @override

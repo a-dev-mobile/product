@@ -10,6 +10,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
@@ -21,7 +22,6 @@ import 'package:product/core/log/log.dart';
 import 'package:product/core/network/network.dart';
 import 'package:product/core/storage/storage.dart';
 import 'package:product/data_base/data_base.dart';
-
 
 import 'package:product/firebase_options.dart';
 import 'package:product/global_const.dart';
@@ -45,7 +45,7 @@ Future<void> bootstrap(FutureOr<Widget> Function() app) async {
       Bloc.transformer = bloc_concurrency.sequential<Object?>();
       PlatformDispatcher.instance.onError = _onPlatformDispatcherError;
 
-      // await _initStatusBar();
+      await _initStatusBar();
 
       final _ = await Firebase.initializeApp(
         options: DefaultFirebaseOptions.currentPlatform,
@@ -88,13 +88,7 @@ Future<void> bootstrap(FutureOr<Widget> Function() app) async {
               create: (context) =>
                   AppDatabase(storage: context.read<LocalStorage>()),
             ),
-            // RepositoryProvider(
-            //   create: (context) => NetworkClient(
-            //     baseUrl: BASE_URL,
-            //     userAgent: userAgent,
-            // показывать ли http трафик в логе
-            //   )..isShowHttpInLog = false,
-            // ),
+
           ],
           child: await app(),
         ),
@@ -109,22 +103,23 @@ Future<void> bootstrap(FutureOr<Widget> Function() app) async {
     },
   );
 
-  log.v('** close NATIVE splash**');
   FlutterNativeSplash.remove();
+  log.v('** close NATIVE splash**');
 }
 
-// Future<void> _initStatusBar() async {
-//   await SystemChrome.setPreferredOrientations(
-//     [DeviceOrientation.portraitUp],
-//   );
-//   SystemChrome.setSystemUIOverlayStyle(
-//     const SystemUiOverlayStyle(
-//       statusBarColor: Colors.white,
-//       statusBarIconBrightness: Brightness.dark,
-//       systemNavigationBarIconBrightness: Brightness.dark,
-//     ),
-//   );
-// }
+// ignore: prefer-static-class
+Future<void> _initStatusBar() async {
+  await SystemChrome.setPreferredOrientations(
+    [DeviceOrientation.portraitUp],
+  );
+  SystemChrome.setSystemUIOverlayStyle(
+    const SystemUiOverlayStyle(
+      statusBarColor: Colors.white,
+      statusBarIconBrightness: Brightness.dark,
+      systemNavigationBarIconBrightness: Brightness.dark,
+    ),
+  );
+}
 
 // ignore: prefer-static-class
 HydratedAesCipher _encryptionCipher() {

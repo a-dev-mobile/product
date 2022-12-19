@@ -8,6 +8,7 @@ import 'package:product/feature/bottom_nav_bar/bottom_nav_bar.dart';
 import 'package:product/feature/category/view/category_p.dart';
 import 'package:product/feature/common/test_app/test_app.dart';
 import 'package:product/feature/debug_menu/debug_menu.dart';
+import 'package:product/feature/favorite/favorite.dart';
 import 'package:product/feature/onboarding/vew/vew.dart';
 import 'package:product/feature/overlay_widget/overlay_widget.dart';
 import 'package:product/feature/search/search.dart';
@@ -21,7 +22,6 @@ class AppRouter {
   final LocalStorage _storage;
 
   static final _pageNavigatorKey = GlobalKey<NavigatorState>();
-
 
   final GoRouter router = GoRouter(
     debugLogDiagnostics: true,
@@ -59,6 +59,14 @@ class AppRouter {
             pageBuilder: (context, state) => MaterialPage<void>(
               key: state.pageKey,
               child: const SettingPage(),
+            ),
+          ),
+          GoRoute(
+            name: FavoritePage.name,
+            path: FavoritePage.path,
+            pageBuilder: (context, state) => MaterialPage<void>(
+              key: state.pageKey,
+              child: const FavoritePage(),
             ),
           ),
           GoRoute(

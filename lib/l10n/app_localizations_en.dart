@@ -116,5 +116,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get weight => 'Порция';
 
   @override
+  String get favorite => 'Любимые';
+
+  @override
   String get g => 'g';
 }

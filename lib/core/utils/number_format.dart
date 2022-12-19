@@ -17,6 +17,7 @@ class MyNumberFormat {
     return _formatterNutrient
         .format(value)
         .replaceAll(',', ' ')
+        .replaceAll(RegExp('^[.]'), '0.')
         .replaceAll('.00', '')
         .replaceAll('.0', '')
         .replaceAll('.10', '.1')

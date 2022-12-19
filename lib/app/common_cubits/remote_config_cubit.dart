@@ -11,11 +11,6 @@ import 'package:product/core/storage/local_storage.dart';
 import 'package:product/global_const.dart';
 
 // https://console.firebase.google.com/u/2/project/product-13769/config
-const _devAndroidMinVersionKey = 'dev_android_min_version';
-const _prodAndroidMinVersionKey = 'prod_android_min_version';
-
-const _devNameDbKey = 'dev_name_db';
-const _prodNameDbKey = 'prod_name_db';
 
 class RemoteConfigCubit extends Cubit<RemoteConfigState> {
   RemoteConfigCubit({required LocalStorage storage})
@@ -24,13 +19,18 @@ class RemoteConfigCubit extends Cubit<RemoteConfigState> {
 
   final LocalStorage _storage;
 
+  static const _devAndroidMinVersionKey = 'dev_android_min_version';
+  static const _prodAndroidMinVersionKey = 'prod_android_min_version';
+
+  static const _devNameDbKey = 'dev_version_db';
+  static const _prodNameDbKey = 'prod_version_db';
   Future<void> load() async {
     emit(state.copyWith(isLoad: true));
 
     //Get Latest version info from firebase config
     final remoteConfig = FirebaseRemoteConfig.instance;
-    var versionKey = _prodAndroidMinVersionKey;
-    var nameDbKey = _prodNameDbKey;
+    var versionAppKey = _prodAndroidMinVersionKey;
+    var versionDbKey = _prodNameDbKey;
 
     try {
       //
@@ -41,21 +41,22 @@ class RemoteConfigCubit extends Cubit<RemoteConfigState> {
             minimumFetchInterval: Duration.zero,
           ),
         );
-        versionKey = _devAndroidMinVersionKey;
-        nameDbKey = _devNameDbKey;
+        versionAppKey = _devAndroidMinVersionKey;
+        versionDbKey = _devNameDbKey;
       }
       final _ = await remoteConfig.fetchAndActivate();
 
-      final newVersion = _parseVersion(remoteConfig.getString(versionKey));
-      final newNameDb = remoteConfig.getString(nameDbKey).trim();
+      final newVersionApp =
+          _parseVersion(remoteConfig.getString(versionAppKey));
+      final newVersionDb = remoteConfig.getInt(versionDbKey);
 
-      await _storage.setDbName(newNameDb);
+      await _storage.setVersionDb(newVersionDb);
 
       final currentVersion = await _getCurrentVersion();
       emit(
         state.copyWith(
           isLoad: false,
-          isNeedUpdate: newVersion > currentVersion,
+          isNeedUpdate: newVersionApp > currentVersion,
         ),
       );
     } on Object catch (e, stackTrace) {
@@ -72,8 +73,8 @@ class RemoteConfigCubit extends Cubit<RemoteConfigState> {
 
   Future<int> _getCurrentVersion() async {
     final info = await PackageInfo.fromPlatform();
-    final currentVersion = _parseVersion(info.version);
-    return currentVersion;
+
+    return _parseVersion(info.version);
   }
 
   int _parseVersion(String version) {

@@ -4,22 +4,22 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 
 @immutable
-class SelectedCategoryModel {
+class CategoryModel {
   final String name;
   final bool isActive;
   final int id;
-  const SelectedCategoryModel({
+  const CategoryModel({
     this.name = '',
     this.isActive = false,
     this.id = -1,
   });
 
-  SelectedCategoryModel copyWith({
+  CategoryModel copyWith({
     String? name,
     bool? isActive,
     int? id,
   }) {
-    return SelectedCategoryModel(
+    return CategoryModel(
       name: name ?? this.name,
       isActive: isActive ?? this.isActive,
       id: id ?? this.id,
@@ -34,8 +34,8 @@ class SelectedCategoryModel {
     };
   }
 
-  factory SelectedCategoryModel.fromMap(Map<String, dynamic> map) {
-    return SelectedCategoryModel(
+  factory CategoryModel.fromMap(Map<String, dynamic> map) {
+    return CategoryModel(
       name: map['name'] as String,
       isActive: map['isActive'] as bool,
       id: map['id'] as int,
@@ -44,16 +44,16 @@ class SelectedCategoryModel {
 
   String toJson() => json.encode(toMap());
 
-  factory SelectedCategoryModel.fromJson(String source) =>
-      SelectedCategoryModel.fromMap(
-          json.decode(source) as Map<String, dynamic>,);
+  factory CategoryModel.fromJson(String source) => CategoryModel.fromMap(
+        json.decode(source) as Map<String, dynamic>,
+      );
 
   @override
   String toString() =>
       'SelectedCategoryModel(name: $name, isActive: $isActive, id: $id)';
 
   @override
-  bool operator ==(covariant SelectedCategoryModel other) {
+  bool operator ==(covariant CategoryModel other) {
     if (identical(this, other)) return true;
 
     return other.name == name && other.isActive == isActive && other.id == id;

@@ -170,6 +170,63 @@ enum NutrientName {
 }
 
 /// {@template enum}
+/// IncrDecrValue enumeration
+/// {@endtemplate}
+enum IncrDecrValue with Comparable<IncrDecrValue> {
+  one('1'),
+  five('5'),
+  ten('10'),
+  fifty('50');
+
+  /// {@macro enum}
+  const IncrDecrValue(this.value);
+
+  /// Creates a new instance of [IncrDecrValue] from a given string.
+  static IncrDecrValue fromValue(String? value, {IncrDecrValue? fallback}) {
+    switch (value) {
+      case '1':
+        return one;
+      case '5':
+        return five;
+      case '10':
+        return ten;
+      case '50':
+        return fifty;
+      default:
+        return fallback ?? (throw ArgumentError.value(value));
+    }
+  }
+
+  /// Value of the enum
+  final String value;
+
+  /// Pattern matching
+  T map<T>({
+    required T Function() one,
+    required T Function() five,
+    required T Function() ten,
+    required T Function() fifty,
+  }) {
+    switch (this) {
+      case IncrDecrValue.one:
+        return one();
+      case IncrDecrValue.five:
+        return five();
+      case IncrDecrValue.ten:
+        return ten();
+      case IncrDecrValue.fifty:
+        return fifty();
+    }
+  }
+
+  @override
+  int compareTo(IncrDecrValue other) => index.compareTo(other.index);
+
+  @override
+  String toString() => value;
+}
+
+/// {@template enum}
 /// WeightCalculationType enumeration
 /// {@endtemplate}
 enum WeightCalculationType with Comparable<WeightCalculationType> {

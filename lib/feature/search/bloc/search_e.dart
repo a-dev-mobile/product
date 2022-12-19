@@ -19,6 +19,11 @@ class SearchEventIncrementWeight extends SearchEvent {
   final int id;
 }
 
+class SearchEventSetFavorite extends SearchEvent {
+  const SearchEventSetFavorite({required this.idProduct});
+  final int idProduct;
+}
+
 class SearchEventUpdateUnfocusWeight extends SearchEvent {
   const SearchEventUpdateUnfocusWeight({
     required this.weight,

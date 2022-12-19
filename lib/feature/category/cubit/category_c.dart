@@ -33,7 +33,7 @@ class CategoryCubit extends Cubit<CategoryState> {
     Navigator.pop(context, state.idActive);
   }
 
-  void selected({required SelectedCategoryModel category, bool? value}) {
+  void selected({required CategoryModel category, bool? value}) {
     final categories = state.categories;
     final newActiveindex = categories.indexOf(category);
     final oldActiveIndex = categories.indexWhere((i) => i.isActive);
@@ -56,7 +56,7 @@ class CategoryCubit extends Cubit<CategoryState> {
 
 @immutable
 class CategoryState {
-  final List<SelectedCategoryModel> categories;
+  final List<CategoryModel> categories;
   final int idActive;
   final bool isLoad;
 
@@ -67,7 +67,7 @@ class CategoryState {
   });
 
   CategoryState copyWith({
-    List<SelectedCategoryModel>? categories,
+    List<CategoryModel>? categories,
     int? idActive,
     bool? isLoad,
   }) {
@@ -79,16 +79,16 @@ class CategoryState {
   }
 
   @override
-  String toString() => 'CategoryState(categories: $categories, idActive: $idActive, isLoad: $isLoad)';
+  String toString() =>
+      'CategoryState(categories: $categories, idActive: $idActive, isLoad: $isLoad)';
 
   @override
   bool operator ==(covariant CategoryState other) {
     if (identical(this, other)) return true;
-  
-    return 
-      listEquals(other.categories, categories) &&
-      other.idActive == idActive &&
-      other.isLoad == isLoad;
+
+    return listEquals(other.categories, categories) &&
+        other.idActive == idActive &&
+        other.isLoad == isLoad;
   }
 
   @override
@@ -104,7 +104,11 @@ class CategoryState {
 
   factory CategoryState.fromMap(Map<String, dynamic> map) {
     return CategoryState(
-      categories: List<SelectedCategoryModel>.from((map['categories'] as List<int>).map<SelectedCategoryModel>((x) => SelectedCategoryModel.fromMap(x as Map<String,dynamic>),),),
+      categories: List<CategoryModel>.from(
+        (map['categories'] as List<int>).map<CategoryModel>(
+          (x) => CategoryModel.fromMap(x as Map<String, dynamic>),
+        ),
+      ),
       idActive: map['idActive'] as int,
       isLoad: map['isLoad'] as bool,
     );
@@ -112,5 +116,6 @@ class CategoryState {
 
   String toJson() => json.encode(toMap());
 
-  factory CategoryState.fromJson(String source) => CategoryState.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory CategoryState.fromJson(String source) =>
+      CategoryState.fromMap(json.decode(source) as Map<String, dynamic>);
 }

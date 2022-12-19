@@ -11,13 +11,12 @@ class AppTheme {
   /// *---* [Light Theme] *---*
   static ThemeData lightThemeData() {
     return FlexThemeData.light(
-      scheme: FlexScheme.aquaBlue,
+      scheme: FlexScheme.flutterDash,
       surfaceMode: FlexSurfaceMode.levelSurfacesLowScaffold,
       blendLevel: 9,
       subThemesData: const FlexSubThemesData(
         blendOnLevel: 10,
         blendOnColors: false,
-        inputDecoratorRadius: 16,
       ),
       visualDensity: FlexColorScheme.comfortablePlatformDensity,
       useMaterial3: true,
@@ -29,12 +28,11 @@ class AppTheme {
   /// darkThemeData
   static ThemeData darkThemeData() {
     return FlexThemeData.dark(
-      scheme: FlexScheme.aquaBlue,
+      scheme: FlexScheme.flutterDash,
       surfaceMode: FlexSurfaceMode.levelSurfacesLowScaffold,
       blendLevel: 15,
       subThemesData: const FlexSubThemesData(
         blendOnLevel: 20,
-        inputDecoratorRadius: 16,
       ),
       visualDensity: FlexColorScheme.comfortablePlatformDensity,
       useMaterial3: true,

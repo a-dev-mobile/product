@@ -1,6 +1,7 @@
 // ignore_for_file: unused_field, lines_longer_than_80_chars
 
 import 'dart:async';
+import 'dart:math';
 
 import 'package:bloc/bloc.dart';
 import 'package:bloc_concurrency/bloc_concurrency.dart';
@@ -12,6 +13,7 @@ import 'package:formz/formz.dart';
 import 'package:product/app/common_cubits/common_cubits.dart';
 
 import 'package:product/core/storage/storage.dart';
+
 import 'package:product/core/utils/utils.dart';
 
 import 'package:product/data_base/data_base.dart';
@@ -44,6 +46,7 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
     on<SearchEventIncrementWeight>(_onIncrementWeight);
     on<SearchEventProductsFileredPosition>(_onProductsFileredPosition);
     on<SearchEventUpdateUnfocusWeight>(_onUpdateUnfocusWeight);
+    on<SearchEventSetFavorite>(_onSetFavorite);
   }
   static const int _incrDecrValue = 10;
   final AppDatabase _db;
@@ -56,6 +59,7 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
     SearchEventStarted event,
     Emitter<SearchState> emit,
   ) async {
+    _statusLoad(emit);
     await _db.copyDb();
     await _checkLastSearch(emit);
     _statusInit(emit);
@@ -116,13 +120,13 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
       final categories = result.categories;
 
       //  поиск во всех категориях
-      final selectedCategory = <SelectedCategoryModel>[
-        SelectedCategoryModel(name: event.l.all_product, isActive: true),
+      final selectedCategory = <CategoryModel>[
+        CategoryModel(name: event.l.all_product, isActive: true),
       ];
       var isShowMenuSelectedCategory = false;
 
       for (final e in categories) {
-        selectedCategory.add(SelectedCategoryModel(name: e.name, id: e.id));
+        selectedCategory.add(CategoryModel(name: e.name, id: e.id));
       }
       // если категорий меньше 2 убираем первый элемент - все категории
       if (selectedCategory.length == 2) {
@@ -240,13 +244,13 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
 
     if (weight < 0) weight = 0;
 
-    final newListNutrients = <NutrientModel>[];
+    final newListNutrients = <NutrientDbModel>[];
     //
     // ignore: omit_local_variable_types
     double result = 0;
-    
+
     for (final i in currentProduct.nutrients) {
-      result = double.parse(i.valueBase) * weight / 100;
+      result = double.parse(i.valueBase.replaceAll(' ', '')) * weight / 100;
       newListNutrients.add(
         i.copyWith(
           value: MyNumberFormat.nutrient(result),
@@ -260,13 +264,12 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
     emit(
       state.copyWith(
         productsFiltered: listProduct,
-        isUpdateListProduct: true,
+        forceUpdateState: Random().nextDouble(),
       ),
     );
-    emit(state.copyWith(isUpdateListProduct: false));
   }
 
-  List<SelectedCategoryModel> _changeActiveCategory(int activeCategory) {
+  List<CategoryModel> _changeActiveCategory(int activeCategory) {
     final categories = state.categories;
     final newActiveindex = categories.indexWhere((i) => i.id == activeCategory);
 
@@ -288,7 +291,10 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
   ) async {
     final context = event.context;
 
-    var categoriesNew = <SelectedCategoryModel>[];
+    final favorites = await _storage.getFavorite();
+    final favoritesIdProduct = favorites.map((v) => v.idProduct).toList();
+
+    var categoriesNew = <CategoryModel>[];
     int? idCategory;
 
     if (event.isOpenPageCategories) {
@@ -311,6 +317,12 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
     var products = state.productsBase;
     if (!categoryActual.isNegative) {
       products = products.where((e) => e.idCategory == categoryActual).toList();
+
+      // перебираю чтобы установит favorites
+      for (var i = 0; i < products.length; i++) {
+        products[i] = products[i]
+            .copyWith(isFavorite: favoritesIdProduct.contains(products[i].id));
+      }
     }
 
     emit(
@@ -341,6 +353,42 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
       typeCalculate: WeightCalculationType.custom,
       id: event.id,
       customWeight: event.weight,
+    );
+  }
+
+  FutureOr<void> _onSetFavorite(
+    SearchEventSetFavorite event,
+    Emitter<SearchState> emit,
+  ) {
+    final idProduct = event.idProduct;
+
+    final listProduct = state.productsFiltered;
+
+    final currentIndex = listProduct.indexWhere((e) => e.id == idProduct);
+    final currentProduct = listProduct[currentIndex];
+
+    final isFavorite = !currentProduct.isFavorite;
+
+    listProduct[currentIndex] = currentProduct.copyWith(isFavorite: isFavorite);
+
+    // save for favorite page
+
+    unawaited(
+      _storage.addFavorite(
+        FavoriteCacheModel(
+          name: currentProduct.product,
+          isFavorite: isFavorite,
+          idProduct: idProduct,
+          weight: currentProduct.weight,
+        ),
+      ),
+    );
+
+    emit(
+      state.copyWith(
+        productsFiltered: listProduct,
+        forceUpdateState: Random().nextDouble(),
+      ),
     );
   }
 }

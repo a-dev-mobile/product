@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'package:product/app/style/style.dart';
 import 'package:product/data_base/models/models.dart';
 import 'package:product/feature/search/search.dart';
@@ -10,25 +11,42 @@ class SearchItem extends StatelessWidget {
     required this.product,
     required this.onIncrement,
     required this.onDecrement,
+    required this.onFavorit,
   });
-  final ProductModel product;
+  final ProductDbModel product;
 
   final void Function()? onIncrement;
   final void Function()? onDecrement;
+  final void Function()? onFavorit;
   @override
   Widget build(BuildContext context) {
     final l = context.l10n;
 
     return Card(
-      elevation: 3,
+      elevation: 1,
       child: Padding(
         padding: const EdgeInsets.all(8),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              product.product,
-              style: AppTextStyles.h4(),
+            Row(
+              children: [
+                Expanded(
+                  child: Text(
+                    product.product,
+                    style: AppTextStyles.h4(),
+                  ),
+                ),
+                IconButton(
+                  onPressed: onFavorit,
+                  icon: product.isFavorite
+                      ? const Icon(
+                          Icons.favorite_outlined,
+                          color: Colors.red,
+                        )
+                      : const Icon(Icons.favorite_border),
+                ),
+              ],
             ),
             const Divider(),
             Text(
@@ -62,27 +80,27 @@ class SearchItem extends StatelessWidget {
                 ),
               ],
             ),
-            Align(
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  IconButton(
-                    onPressed: onDecrement,
-                    icon: const Icon(
-                      Icons.remove_circle_outline,
-                      size: 40,
-                    ),
-                  ),
-                  IconButton(
-                    onPressed: onIncrement,
-                    icon: const Icon(
-                      Icons.add_circle_outline,
-                      size: 40,
-                    ),
-                  ),
-                ],
-              ),
-            ),
+            // Align(
+            //   child: Row(
+            //     mainAxisSize: MainAxisSize.min,
+            //     children: [
+            //       IconButton(
+            //         onPressed: onDecrement,
+            //         icon: const Icon(
+            //           Icons.remove_circle_outline,
+            //           size: 40,
+            //         ),
+            //       ),
+            //       IconButton(
+            //         onPressed: onIncrement,
+            //         icon: const Icon(
+            //           Icons.add_circle_outline,
+            //           size: 40,
+            //         ),
+            //       ),
+            //     ],
+            //   ),
+            // ),
           ],
         ),
       ),
@@ -104,7 +122,6 @@ class _WeightRow extends StatelessWidget {
     final l = context.l10n;
 
     return Row(
-      
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text(
@@ -115,8 +132,6 @@ class _WeightRow extends StatelessWidget {
           weight: weight,
           idProduct: idProduct,
         ),
-
-     
       ],
     );
   }

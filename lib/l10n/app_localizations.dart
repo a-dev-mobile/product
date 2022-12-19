@@ -315,6 +315,12 @@ abstract class AppLocalizations {
   /// **'Порция'**
   String get weight;
 
+  /// No description provided for @favorite.
+  ///
+  /// In ru, this message translates to:
+  /// **'Любимые'**
+  String get favorite;
+
   /// No description provided for @g.
   ///
   /// In ru, this message translates to:

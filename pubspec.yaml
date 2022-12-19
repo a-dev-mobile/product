@@ -2,7 +2,7 @@ name: product
 description: A new Flutter project.
 
 
-publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+publish_to: 'none' 
 
 
 version: 1.0.0+7
@@ -91,8 +91,9 @@ dependencies:
   firebase_analytics: ^10.0.7
 
 
-  # native calls
+  
   syncfusion_flutter_pdfviewer: ^20.3.59
+  # syncfusion_flutter_charts: ^20.3.61
   url_launcher: ^6.1.7
   share_plus: ^6.3.0
 
@@ -116,13 +117,13 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   # help lint
-  dart_code_metrics: ^5.2.1
+  dart_code_metrics: ^5.3.0
   very_good_analysis: ^3.1.0
-  # helpers UI
+
 
     # for models
   freezed: ^2.3.2
-  build_runner: ^2.3.2
+  build_runner: ^2.3.3
 
 
 
@@ -134,6 +135,7 @@ flutter:
     - assets/svg/
     - assets/lottie/
     - assets/image/
+
 
 
 

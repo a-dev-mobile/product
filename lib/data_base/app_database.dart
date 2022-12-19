@@ -1,10 +1,13 @@
 // ignore_for_file: lines_longer_than_80_chars
 
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:firebase_storage/firebase_storage.dart';
 
-import 'package:path_provider/path_provider.dart';
+import 'package:path/path.dart';
+
+
 
 import 'package:product/core/storage/local_storage.dart';
 import 'package:product/core/utils/utils.dart';
@@ -20,28 +23,65 @@ class AppDatabase {
 
   final LocalStorage _storage;
 
-  String _fullPath = '';
+  String _fullPathFileDb = '';
 
   Future<void> copyDb() async {
-    // Check if the database exists
-    final path = await getApplicationDocumentsDirectory();
-    final nameDB = await _storage.getDbName();
-    //  _locale = await _storage.getLocale();
+    const nameDb = 'product.dbe';
 
-    _fullPath = '${path.path}/$nameDB';
-    final exists = await databaseExists(_fullPath);
+    final databasesPath = await getDatabasesPath();
+    _fullPathFileDb = join(databasesPath, nameDb);
 
-    if (!exists) {
-      final storageRef = FirebaseStorage.instance.ref().child('/db/$nameDB');
+    final db = await _openDB();
+    final currentVersionDb = await db.getVersion();
+    final newVersionDb = await _storage.getDbVersion();
 
-      final file = File(_fullPath);
+    if (currentVersionDb < newVersionDb) {
+      await db.close();
 
-      final _ = storageRef.writeToFile(file);
+      //delete the old database so you can copy the new one
+      await deleteDatabase(_fullPathFileDb);
+
+      // ignore: unused_local_variable
+      final directory =
+          await Directory(dirname(_fullPathFileDb)).create(recursive: true);
+
+      final dbFile = FirebaseStorage.instance.ref().child('db').child(nameDb);
+
+      final downloadTask = dbFile.writeToFile(File(_fullPathFileDb));
+
+// ignore: avoid-ignoring-return-values
+      downloadTask.snapshotEvents.listen((taskSnapshot) async {
+        switch (taskSnapshot.state) {
+          case TaskState.running:
+            log('TaskState.running');
+            break;
+          case TaskState.paused:
+            log('TaskState.paused');
+            break;
+
+          case TaskState.canceled:
+            log('TaskState.canceled');
+            break;
+          case TaskState.error:
+            log('TaskState.error');
+            break;
+
+          case TaskState.success:
+            log('TaskState.success');
+
+            final db = await _openDB();
+
+            await db.setVersion(newVersionDb);
+
+            await db.close();
+            break;
+        }
+      });
     }
   }
 
   Future<Database> _openDB() {
-    return openDatabase(_fullPath, password: APP_DB_PASSWORD);
+    return openDatabase(_fullPathFileDb, password: APP_DB_PASSWORD);
   }
 
 // *******************************
@@ -50,8 +90,11 @@ class AppDatabase {
     required String find,
     required String locale,
   }) async {
-    final products = <ProductModel>[];
-    final categories = <CategoryModel>[];
+    final products = <ProductDbModel>[];
+    final categories = <CategoryDbModel>[];
+    //  getting favorite product and use only id product
+    final favorites = await _storage.getFavorite();
+    final favoritesIdProduct = favorites.map((v) => v.idProduct).toList();
 
     final listEnumNutrient = [
       NutrientName.calorie.name,
@@ -82,31 +125,31 @@ class AppDatabase {
 
     final query = '''
 SELECT  
-p.id as id, 
+p.id as idProduct, 
 
-s.name_$locale as sourceName, 
-s.abbrev_$locale as sourceAbbrev, 
-s.id_source as sourceId,
+s.${locale}_name as sourceName, 
+s.${locale}_abbrev as sourceAbbrev, 
+s.id as sourceId,
 
-c.id_category as categoryId, 
-c.name_$locale as categoryName, 
+c.id as categoryId, 
+c.${locale}_name as categoryName, 
 
 
 
-p.name_$locale as product, 
+p.${locale}_name as product, 
 
 $listNutrient 
 
 FROM food as f
 
 JOIN category as c 
-on f.id_category = c.id_category
+on f.id_category = c.id
 
 JOIN source as s 
-on f.id_source = s.id_source
+on f.id_source = s.id
 
 JOIN product as p 
-on p.id_product=f.id_product
+on p.id=f.id_product
 
 WHERE ${_getProductWhereQuery(listFind, locale)} 
 
@@ -117,17 +160,17 @@ WHERE ${_getProductWhereQuery(listFind, locale)}
       '''
 SELECT 
 nutrient, 
-name_$locale as name, 
-id_type_nutrient as idType, 
-unit_$locale as unit from nutrient''',
+${locale}_name as name, 
+id_type as idType, 
+${locale}_unit as unit from nutrient''',
     );
 
-    final listAllNutrient = <NutrientModel>[];
+    final listAllNutrient = <NutrientDbModel>[];
 
     for (var i = 0; i < dbNutrient.length; i++) {
       final row = dbNutrient[i];
       listAllNutrient.add(
-        NutrientModel(
+        NutrientDbModel(
           name: row['name'].toString(),
           unit: row['unit'].toString(),
           value: '',
@@ -145,14 +188,14 @@ unit_$locale as unit from nutrient''',
     var categoryName = '';
     var categoryId = -1;
     var product = '';
-    var id = -1;
+    var idProduct = -1;
 
     final dbProduct = await db.rawQuery(query);
 
     for (var i = 0; i < dbProduct.length; i++) {
       final row = dbProduct[i];
 
-      final nutrients = <NutrientModel>[];
+      final nutrients = <NutrientDbModel>[];
       // data for the main product parameters
       sourceName = row['sourceName'].toString();
       sourceAbbrev = row['sourceAbbrev'].toString();
@@ -161,10 +204,10 @@ unit_$locale as unit from nutrient''',
       categoryName = row['categoryName'].toString();
       categoryId = int.parse(row['categoryId'].toString());
       product = row['product'].toString();
-      id = int.parse(row['id'].toString());
+      idProduct = int.parse(row['idProduct'].toString());
 
       // список всех категорий
-      categories.add(CategoryModel(id: categoryId, name: categoryName));
+      categories.add(CategoryDbModel(id: categoryId, name: categoryName));
 
       // nutrient enumeration
       for (var i = 0; i < listEnumNutrient.length; i++) {
@@ -181,7 +224,7 @@ unit_$locale as unit from nutrient''',
 
           //  filling out a new
           nutrients.add(
-            NutrientModel(
+            NutrientDbModel(
               name: findNutrient.name,
               unit: findNutrient.unit,
               value: valueFormat,
@@ -194,17 +237,19 @@ unit_$locale as unit from nutrient''',
       }
 
       products.add(
-        ProductModel(
+        ProductDbModel(
           category: categoryName,
           idCategory: categoryId,
           product: product,
+          id: idProduct,
+          // если содержиться в списке значит favorite
+          isFavorite: favoritesIdProduct.contains(idProduct),
           source: SourceModel(
             abbrev: sourceAbbrev,
             idSource: sourceId,
             name: sourceName,
           ),
           nutrients: nutrients,
-          id: id,
         ),
       );
     }
@@ -227,9 +272,9 @@ unit_$locale as unit from nutrient''',
       where = '''
             $where 
     (
-    p.name_$locale LIKE "%${s.toLowerCase()}%" 
+    p.${locale}_name LIKE "%${s.toLowerCase()}%" 
     OR
-    p.name_$locale LIKE "%${s.toCapitalized()}%"
+    p.${locale}_name LIKE "%${s.toCapitalized()}%"
     )''';
       // если последний проход and не добавляем
       if (i != listFind.length - 1) {
